@@ -11,7 +11,10 @@
   <div>
     <ul>
       {% for d in data %}
-      <li>{{ d.title }}</li>
+      <li>
+        {{ d["document"].title }}
+        <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
+      </li>
       {% endfor %}
     </ul>
   </div>

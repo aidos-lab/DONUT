@@ -41,6 +41,7 @@ def index_documents(data_filename, database_dir):
 
         for author in authors:
             termgenerator.index_text(author, 1, "A")
+            termgenerator.index_text(author)
 
         termgenerator.increase_termpos()
 

@@ -1,0 +1,6 @@
+*~
+*.swp
+
+.python-version
+
+__pycache__/

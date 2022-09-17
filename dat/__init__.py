@@ -11,7 +11,7 @@ def create_app(test_config=None):
 
     @app.route("/")
     def index():
-        return "Hello, World!"
+        return render_template("index.html", data=[])
 
     @app.route("/about")
     def about():

@@ -1,6 +1,7 @@
 """Parse BibTeX file into records."""
 
 import bibtexparser
+import json
 
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import author
@@ -117,72 +118,6 @@ def process_entry(entry):
         'type': entry['ENTRYTYPE']
     }
 
-    print(entry.keys())
-
-    return ""
-
-    if paper['ENTRYTYPE'] in ['article', 'inproceedings', 'incollection']:
-        output += ', '
-
-        for f in ['journal', 'booktitle']:
-            if f in paper:
-                c = fix_raw_latex(paper[f])
-                output += c
-
-        if volume := paper.get('volume', None):
-            output += f', Volume {volume}'
-
-        if number := paper.get('number', None):
-            output += f', Number {number}'
-
-        if pages := paper.get('pages', None):
-            output += f', pp. {pages}'
-
-    elif paper['ENTRYTYPE'] == 'mastersthesis':
-        output += ', M.Sc. thesis'
-        output += ', ' + paper.get('school')
-
-    elif paper['ENTRYTYPE'] == 'phdthesis':
-        output += ', Ph.D. thesis'
-        output += ', ' + paper.get('school')
-
-    elif paper['ENTRYTYPE'] == 'unpublished':
-        if 'preprint' not in paper['type'].lower():
-            logger.warning(f'Skipping {title}')
-            return None
-
-        output += ', Preprint'
-
-    else:
-        logger.warning(f'Did not handle paper "{paper}"')
-
-    output += ', ' + paper['year']
-
-    # Add publication state
-    if 'pubstate' in paper:
-        state = get_pubstate(paper)
-        output += f' ({state})'
-
-    # Print extra fields, containing information about the BibTeX file,
-    # the GitHub repository, etc.
-    if args.verbose:
-        output += '''<br />
-        <small>'''
-
-        if 'repository' in paper:
-            output += f"[\[GitHub\]]({paper['repository']}) &bull; "
-
-        output += f"[\[BibTeX\]]({paper['ID']}.bib)"
-
-        output += '</small>'
-
-        # Add all notes on a new line.
-        if 'note' in paper:
-            note = fix_raw_latex(paper['note'])
-            output += f'''<br />
-        <small>{note}</small>'''
-
-    # TODO: require better way of formatting paper/conference etc. here
     return output
 
 

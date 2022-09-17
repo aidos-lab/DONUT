@@ -76,8 +76,8 @@ def format_authors(authors):
         name = HumanName(name_parts)
 
         name_parts = (
-            initialise(name.first)
-            + initialise(name.middle, "&thinsp;")
+            name.first
+            + initialise(name.middle, " ")
             + " "
             + name.last
         )

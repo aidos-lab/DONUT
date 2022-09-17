@@ -31,6 +31,30 @@ def initialise(name, pad=''):
         return ''
 
 
+def fix_raw_latex(field):
+    """Fix raw LaTeX commands."""
+    raw = [
+        '\\emph',
+        '\\mbox',
+        '\\textbf',
+        # This is probably due to a bug in the parser; ideally, raw
+        # markup should be replaced 'as-is.'
+        '\\Texttt',
+    ]
+
+    for kw in raw:
+        field = field.replace(kw, '')
+
+    # Replace quotes and let our Markdown system do the right thing
+    # here.
+    field = field.replace('`', '\'')
+
+    # Non-breaking space handling
+    field = field.replace('~', '&nbsp;')
+
+    return field
+
+
 def format_title(entry):
     """Create formatted title from entry."""
     raw_title = entry['title']
@@ -60,51 +84,6 @@ def format_authors(authors):
         output.append(name_parts)
 
     return output
-
-
-def make_eprint_url(paper):
-    """Return URL from paper with `eprint`."""
-    url = None
-    eprint = paper['eprint']
-    if paper['archiveprefix'] == 'arXiv':
-        url = f'https://arxiv.org/abs/{eprint}'
-
-    return url
-
-
-def get_pubstate(paper):
-    """Return publication state of paper."""
-    state = paper['pubstate']
-    if state == 'inpress':
-        return 'in press'
-    elif state == 'inpreparation':
-        return 'in preparation'
-    else:
-        return state
-
-
-def fix_raw_latex(field):
-    """Fix raw LaTeX commands."""
-    raw = [
-        '\\emph',
-        '\\mbox',
-        '\\textbf',
-        # This is probably due to a bug in the parser; ideally, raw
-        # markup should be replaced 'as-is.'
-        '\\Texttt',
-    ]
-
-    for kw in raw:
-        field = field.replace(kw, '')
-
-    # Replace quotes and let our Markdown system do the right thing
-    # here.
-    field = field.replace('`', '\'')
-
-    # Non-breaking space handling
-    field = field.replace('~', '&nbsp;')
-
-    return field
 
 
 def process_entry(entry):

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<title>DAT</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</nav>
+
+<body>
+
+<section>
+{% block content %}{% endblock %}
+</section>
+
+</body>
+
+</html>

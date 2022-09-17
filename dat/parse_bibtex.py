@@ -100,17 +100,17 @@ def process_entry(entry):
     return output
 
 
-########################################################################
-# HIC SVNT DRACONES
-########################################################################
+def get_entries(filename):
+    """Get entries from file."""
+    parser = BibTexParser(
+        common_strings=True,
+        customization=customisations
+    )
 
-parser = BibTexParser(
-    common_strings=True,
-    customization=customisations
-)
+    with open(filename) as f:
+        db = bibtexparser.load(f, parser=parser)
 
-with open('/tmp/tda.bib') as f:
-    db = bibtexparser.load(f, parser=parser)
+    entries = [e for e in db.entries if 'year' in e]
+    entries = [process_entry(e) for e in entries]
 
-entries = [e for e in db.entries if 'year' in e]
-entries = [process_entry(e) for e in entries]
+    return entries

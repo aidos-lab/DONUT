@@ -75,6 +75,16 @@ def search(database_dir, query_str):
             match.document.get_data()
         )
 
-        matches.append(data)
+        matches.append({
+            "id": match.docid,
+            "document": data,
+        })
 
     return matches
+
+
+def get_document(database_dir, identifier):
+    db = xapian.Database(database_dir)
+    doc = db.get_document(identifier)
+
+    return json.loads(doc.get_data())

@@ -4,12 +4,13 @@
   <div>
     <form method="post">
       <input type="text" placeholder="Search terms" name="query" />
+      <input type="submit" value="Submit" />
     </form>
   </div>
 
   <div>
     <ul>
-      {% for d in data["results"] %}
+      {% for d in data %}
       <li>{{ d.title }}</li>
       {% endfor %}
     </ul>

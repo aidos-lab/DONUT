@@ -52,8 +52,28 @@ def index_documents(data_filename, database_dir):
         doc.add_boolean_term(id_term)
         db.replace_document(id_term, doc)
 
-########################################################################
-# HVC SVNT DRACONES
-########################################################################
 
-index_documents("/tmp/tda.bib", "data/") 
+def search(database_dir, query_str):
+    db = xapian.Database(database_dir)
+
+    queryparser = xapian.QueryParser()
+    queryparser.set_stemmer(xapian.Stem("en"))
+    queryparser.set_stemming_strategy(queryparser.STEM_SOME)
+
+    queryparser.add_prefix("title", "S")
+    queryparser.add_prefix("author", "A")
+
+    query = queryparser.parse_query(query_str)
+
+    enquire = xapian.Enquire(db)
+    enquire.set_query(query)
+
+    matches = []
+    for match in enquire.get_mset(0, 10):
+        data = json.loads(
+            match.document.get_data()
+        )
+
+        matches.append(data)
+
+    return matches

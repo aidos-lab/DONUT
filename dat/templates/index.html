@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div>
+    <form method="post">
+      <input type="text" placeholder="Search terms" name="query" />
+    </form>
+  </div>
+
+  <div>
+    <ul>
+      {% for d in data["results"] %}
+      <li>{{ d.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+{% endblock %}

@@ -6,7 +6,7 @@ import xapian
 from dat.parse_bibtex import get_entries
 
 
-def index_documents(data_filename, database_filename):
+def index_documents(data_filename, database_dir):
     """Index documents from data file.
 
     Parameters
@@ -14,10 +14,10 @@ def index_documents(data_filename, database_filename):
     data_filename : str
         Filename for loading data from
 
-    database_filename : str
-        Filename for database
+    database_dir : str
+        Directory for database
     """
-    db = xapian.WritableDatabase(database_filename, xapian.DB_CREATE_OR_OPEN)
+    db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OPEN)
 
     termgenerator = xapian.TermGenerator()
     termgenerator.set_stemmer(xapian.Stem("en"))
@@ -29,16 +29,19 @@ def index_documents(data_filename, database_filename):
     for entry in entries:
         title = entry["title"]
         identifier = entry["id"] 
-        author = entry["author"]
+        authors = entry["author"]
 
         doc = xapian.Document()
         termgenerator.set_document(doc)
 
         termgenerator.index_text(title, 1, "S")
-
         termgenerator.index_text(title)
 
-        # FIXME: Only need this for more terms.
+        termgenerator.increase_termpos()
+
+        for author in authors:
+            termgenerator.index_text(author, 1, "A")
+
         termgenerator.increase_termpos()
 
         # FIXME: This is for debugging purposes only: we store the full
@@ -48,3 +51,9 @@ def index_documents(data_filename, database_filename):
         id_term = "Q" + identifier
         doc.add_boolean_term(id_term)
         db.replace_document(id_term, doc)
+
+########################################################################
+# HVC SVNT DRACONES
+########################################################################
+
+index_documents("/tmp/tda.bib", "data/") 

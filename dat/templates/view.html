@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <article>
+    <div>{{ document.title }}</div>
+
+    {% if document.author is defined %}
+    <div>
+      <ul>
+        {% for author in document.author %}
+        <li>{{ author }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </article>
+{% endblock %}

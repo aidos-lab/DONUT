@@ -76,15 +76,17 @@ def format_authors(authors):
         name = HumanName(name_parts)
 
         name_parts = (
-            name.first
-            + initialise(name.middle, " ")
-            + " "
-            + name.last
+            name.first + initialise(name.middle, " ") + " " + name.last
         )
 
         output.append(name_parts)
 
     return output
+
+
+def format_keywords(keywords):
+    """Format keywords by stripping away leading decimals."""
+    return [keyword.split("-")[-1].strip() for keyword in keywords.split(",")]
 
 
 def process_entry(entry):
@@ -94,6 +96,8 @@ def process_entry(entry):
     output = {
         "title": format_title(entry),
         "author": format_authors(entry["author"]),
+        "keywords": format_keywords(entry.get("keywords", "")),
+        "abstract": entry.get("abstract", ""),
         "id": entry["ID"],
         "type": entry["ENTRYTYPE"],
     }

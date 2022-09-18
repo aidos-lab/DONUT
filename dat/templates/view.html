@@ -13,5 +13,16 @@
       </ul>
     </div>
     {% endif %}
+
+    {% if document.keywords is defined %}
+    <div class="tags">
+      <ul>
+        {% for keyword in document.keywords %}
+        <li>{{ keyword }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
   </article>
 {% endblock %}

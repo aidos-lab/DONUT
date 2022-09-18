@@ -9,6 +9,25 @@ body
   padding:      0 10px;
 }
 
+.tags ul
+{
+  list-style-type:  none;
+  padding-left:     0px;
+  margin:           0;
+}
+
+.tags li
+{
+  display:        inline;
+  font-size:      small;
+  font-weight:    300;
+  text-transform: lowercase;
+  background:     #c41e3a;
+  color:          white;
+  border-radius:  2.5px;
+  padding:        0.25em 0.5em 0.25em 0.5em;
+}
+
 .search
 {
   margin: auto;

@@ -9,6 +9,26 @@ body
   padding:      0 10px;
 }
 
+.search
+{
+  margin: auto;
+  text-align: center;
+}
+
+.search button
+{
+  display: block-inline;
+}
+
+.search input[type=text]
+{
+  margin:      auto;
+  display:     block;
+  width:       75%;
+  line-height: 4.0;
+  border: 1px solid black;
+}
+
 h1, h2, h3
 {
   line-height:1.2

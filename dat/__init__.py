@@ -15,12 +15,15 @@ def create_app(test_config=None):
 
     @app.route("/", methods=["GET", "POST"])
     def index():
-        data = []
+        data = None
+        query = None
+
         if request.form:
+            query = request.form["query"]
             matches = search(DATABASE_DIR, request.form["query"])
             data = matches
 
-        return render_template("index.html", data=data)
+        return render_template("index.html", data=data, query=query)
 
     @app.route("/view/<int:identifier>/", methods=["GET"])
     def view(identifier):

@@ -2,8 +2,16 @@
 
 {% block content %}
   <div class="search">
+    {% if query is none %}
+      {% set query = "" %}
+    {% endif %}
     <form method="post">
-      <input type="text" placeholder="Search terms" name="query" autofocus />
+      <input autofocus
+        type="text"
+        placeholder="Search terms"
+        name="query"
+        value="{{ query }}"
+      />
       <button type="submit">
         Search
       </button>
@@ -13,15 +21,17 @@
     </form>
   </div>
 
-  <div>
-    <ul>
-      {% for d in data %}
-      <li>
-        {{ d["document"].title }}
-        <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+  {% if data is not none %}
+    <div>
+      <ul>
+        {% for d in data %}
+        <li>
+          {{ d["document"].title }}
+          <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
 
 {% endblock %}

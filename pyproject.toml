@@ -12,6 +12,8 @@ Sphinx = "^5.1.1"
 nameparser = "^1.1.1"
 titlecase = "^2.4"
 Flask = "^2.2.2"
+pyzotero = "^1.5.5"
+python-dotenv = "^0.21.0"
 
 
 [build-system]

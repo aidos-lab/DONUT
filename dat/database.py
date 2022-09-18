@@ -45,21 +45,18 @@ def index_documents(data_filename, database_dir):
 
         termgenerator.increase_termpos()
 
-        if "abstract" in entry:
-            abstract = entry["abstract"]
+        abstract = entry["abstract"]
 
-            termgenerator.index_text(abstract, 1, "XA")
-            termgenerator.index_text(abstract)
+        termgenerator.index_text(abstract, 1, "XA")
+        termgenerator.index_text(abstract)
 
-            termgenerator.increase_termpos()
+        termgenerator.increase_termpos()
 
-        if "keywords" in entry:
-            for keyword in entry["keywords"]:
-                keyword = keyword.split(" - ")[1]
-                keyword = keyword.strip()
+        for keyword in entry["keywords"]:
+            termgenerator.index_text(keyword, 1, "K")
+            termgenerator.index_text(keyword)
 
-                termgenerator.index_text(keyword, 1, "K")
-                termgenerator.index_text(keyword)
+        termgenerator.increase_termpos()
 
         # FIXME: This is for debugging purposes only: we store the full
         # entry as a nicely-formatted object.
@@ -80,6 +77,8 @@ def search(database_dir, query_str):
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("author", "A")
     queryparser.add_prefix("abstract", "XA")
+    queryparser.add_prefix("tag", "K")
+    queryparser.add_prefix("keyword", "K")
 
     query = queryparser.parse_query(query_str)
 
@@ -88,14 +87,14 @@ def search(database_dir, query_str):
 
     matches = []
     for match in enquire.get_mset(0, 10):
-        data = json.loads(
-            match.document.get_data()
-        )
+        data = json.loads(match.document.get_data())
 
-        matches.append({
-            "id": match.docid,
-            "document": data,
-        })
+        matches.append(
+            {
+                "id": match.docid,
+                "document": data,
+            }
+        )
 
     return matches
 

@@ -30,7 +30,6 @@ def create_app(test_config=None):
         document = get_document(DATABASE_DIR, identifier)
         return render_template("view.html", document=document)
 
-
     @app.route("/about")
     def about():
         return render_template("about.html")

@@ -28,7 +28,7 @@ def index_documents(data_filename, database_dir):
 
     for entry in entries:
         title = entry["title"]
-        identifier = entry["id"] 
+        identifier = entry["id"]
         authors = entry["author"]
 
         doc = xapian.Document()
@@ -45,8 +45,24 @@ def index_documents(data_filename, database_dir):
 
         termgenerator.increase_termpos()
 
+        if "abstract" in entry:
+            abstract = entry["abstract"]
+
+            termgenerator.index_text(abstract, 1, "XA")
+            termgenerator.index_text(abstract)
+
+            termgenerator.increase_termpos()
+
+        if "keywords" in entry:
+            for keyword in entry["keywords"]:
+                keyword = keyword.split(" - ")[1]
+                keyword = keyword.strip()
+
+                termgenerator.index_text(keyword, 1, "K")
+                termgenerator.index_text(keyword)
+
         # FIXME: This is for debugging purposes only: we store the full
-        # entry as a nicely-formatted entry.
+        # entry as a nicely-formatted object.
         doc.set_data(json.dumps(entry, indent=4))
 
         id_term = "Q" + identifier
@@ -63,6 +79,7 @@ def search(database_dir, query_str):
 
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("author", "A")
+    queryparser.add_prefix("abstract", "XA")
 
     query = queryparser.parse_query(query_str)
 

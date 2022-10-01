@@ -3,16 +3,16 @@
 {% block content %}
 
   {% if data is not none %}
-    <div>
-      <ul>
-        {% for d in data %}
-        <li>
-          {{ d["document"].title }}
-          <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+  <ol class="search-results">
+    {% for d in data %}
+    <li>
+      <article>
+        <h1>{{ d["document"].title }}</h1>
+        <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
+      </article>
+    </li>
+    {% endfor %}
+  </ol>
   {% endif %}
 
 {% endblock %}

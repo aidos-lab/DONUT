@@ -2,12 +2,25 @@ body
 {
   font-family:  "IBM Plex Sans", sans-serif;
   margin:       5% auto;
-  max-width:    50%;
   line-height:  1.6;
   font-size:    18px;
   color:        #444;
   background:   #f2f2f2;
   padding:      0 10px;
+}
+
+.navigation
+{
+  list-style-type: none;
+  padding-left:    0px;
+  margin:          0px;
+  width:           100%;
+}
+
+.navigation li
+{
+  list-style-type: none;
+  display:         inline;
 }
 
 .tags ul
@@ -31,8 +44,10 @@ body
 
 .search
 {
-  margin: auto;
-  text-align: center;
+  margin:         auto;
+  padding-top:    1rem;
+  padding-bottom: 1rem;
+  text-align:     center;
 }
 
 .search button
@@ -49,11 +64,18 @@ body
   border: 1px solid black;
 }
 
-.search-results li
+.search-results
 {
   list-style-type: none;
-  display:         block;
-  margin-bottom:   0.5rem;
+  padding-left:    0px;
+  margin:          0px;
+  width:           100%;
+}
+
+.search-results li
+{
+  display:       block;
+  margin-bottom: 0.5rem;
 }
 
 .search-results article

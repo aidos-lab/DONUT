@@ -1,0 +1,23 @@
+{% block search %}
+
+  <div class="search">
+    {% if query is none %}
+      {% set query = "" %}
+    {% endif %}
+    <form method="post">
+      <input autofocus
+        type="text"
+        placeholder="Search terms"
+        name="query"
+        value="{{ query }}"
+      />
+      <button type="submit">
+        Search
+      </button>
+      <button type="submit" formaction="/random">
+        I'm Feeling Lucky
+      </button>
+    </form>
+  </div>
+
+{% endblock %}

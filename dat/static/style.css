@@ -78,6 +78,11 @@ body
   margin-bottom: 0.5rem;
 }
 
+.search-results h1
+{
+  margin-bottom: 0;
+}
+
 .search-results article
 {
   background-color: white;

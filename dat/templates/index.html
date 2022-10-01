@@ -8,6 +8,9 @@
     <li>
       <article>
         <h1>{{ d["document"].title }}</h1>
+        <address>
+          {{ d["document"].author | join(', ') }}
+        </address>
         <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>
     </li>

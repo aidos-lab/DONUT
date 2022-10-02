@@ -18,12 +18,14 @@
         <div class="tags">
           <ul>
             {% for keyword in document.keywords %}
-            <li>{{ keyword }}</li>
+            <li>
+              {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
+              <a href={{ url}}>{{ keyword }}</a>
+            </li>
             {% endfor %}
           </ul>
         </div>
         {% endif %}
-
 
         <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>

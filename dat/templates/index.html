@@ -5,12 +5,26 @@
   {% if data is not none %}
   <ol class="search-results">
     {% for d in data %}
-    <li>
+    <li class="search-result">
       <article>
-        <h1>{{ d["document"].title }}</h1>
+        {% set document = d["document"] %}
+
+        <h1>{{ document.title }}</h1>
         <address>
-          {{ d["document"].author | join(', ') }}
+          {{ document.author | join(', ') }}
         </address>
+
+        {% if document.keywords is defined %}
+        <div class="tags">
+          <ul>
+            {% for keyword in document.keywords %}
+            <li>{{ keyword }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+
         <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>
     </li>

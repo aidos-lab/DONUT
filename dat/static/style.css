@@ -72,7 +72,7 @@ body
   width:           100%;
 }
 
-.search-results li
+.search-result
 {
   display:       block;
   margin-bottom: 0.5rem;

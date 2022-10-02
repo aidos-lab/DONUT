@@ -1,6 +1,7 @@
 """Database module."""
 
 import json
+import random
 import xapian
 
 from dat.parse_bibtex import get_entries
@@ -109,6 +110,8 @@ def search(database_dir, query_str):
     for match in enquire.get_mset(0, 10):
         data = json.loads(match.document.get_data())
 
+        print(json.dumps(data, indent=4))
+
         matches.append(
             {
                 "id": match.docid,
@@ -119,8 +122,13 @@ def search(database_dir, query_str):
     return matches
 
 
-def get_document(database_dir, identifier):
+def get_random_document(database_dir):
+    """Return random document from database."""
     db = xapian.Database(database_dir)
-    doc = db.get_document(identifier)
+    identifier = random.randint(1, db.get_lastdocid())
+    document = db.get_document(identifier)
 
-    return json.loads(doc.get_data())
+    # TODO: Turn this into a stand-alone function to ensure that matches
+    # are always handled the same.
+    data = json.loads(document.get_data())
+    return [{"id": identifier, "document": data}]

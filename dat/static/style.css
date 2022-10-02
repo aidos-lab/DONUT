@@ -34,12 +34,19 @@ body
 {
   display:        inline;
   font-size:      small;
-  font-weight:    300;
+  font-weight:    600;
   text-transform: lowercase;
   background:     #c41e3a;
   color:          white;
   border-radius:  2.5px;
   padding:        0.25em 0.5em 0.25em 0.5em;
+  margin-right:   0.5em;
+}
+
+.tags a
+{
+  color:           white;
+  text-decoration: none;
 }
 
 .search

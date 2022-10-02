@@ -89,6 +89,13 @@ def format_keywords(keywords):
     return [keyword.split("-")[-1].strip() for keyword in keywords.split(",")]
 
 
+def format_doi(doi):
+    """Format DOI and strip away URL parts."""
+    doi = doi.replace("https://dx.doi.org/", "")
+    doi = doi.replace("https://doi.org/", "")
+    return doi
+
+
 def process_entry(entry):
     """Process a single bibliographic entry."""
     # Will store the resulting entry as a nice dictionary, containing
@@ -98,6 +105,8 @@ def process_entry(entry):
         "author": format_authors(entry["author"]),
         "keywords": format_keywords(entry.get("keywords", "")),
         "abstract": entry.get("abstract", ""),
+        "doi": format_doi(entry.get("doi", "")),
+        "url": entry.get("url", ""),
         "id": entry["ID"],
         "type": entry["ENTRYTYPE"],
     }

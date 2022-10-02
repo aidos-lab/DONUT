@@ -28,6 +28,22 @@
         </details>
         {% endif %}
 
+        <ul class="references">
+          {% if document.url | length %}
+            <li>
+              <a href="{{ document.url }}">URL</a>
+            </li>
+          {% endif %}
+
+          {% if document.doi | length %}
+            <li>
+              {% set url = "https://dx.doi.org/" ~ document.doi %}
+              <a href="{{ url }}">DOI</a>
+            </li>
+          {% endif %}
+
+        </ul>
+
         {% if document.keywords is defined %}
         <div class="tags">
           <ul>
@@ -40,8 +56,6 @@
           </ul>
         </div>
         {% endif %}
-
-
         <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>
     </li>

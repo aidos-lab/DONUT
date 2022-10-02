@@ -25,7 +25,6 @@ body
 
 .navigation li
 {
-  list-style-type: none;
   display:         inline;
 }
 
@@ -101,6 +100,19 @@ body
   background-color: white;
   border:           1px solid #E8E8E8;
   padding:          0.5rem;
+}
+
+.references
+{
+  list-style-type: none;
+  padding-left:    0px;
+  margin:          0px;
+  width:           100%;
+}
+
+.references li
+{
+  display: inline;
 }
 
 h1, h2, h3

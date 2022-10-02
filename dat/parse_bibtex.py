@@ -105,6 +105,7 @@ def process_entry(entry):
         "author": format_authors(entry["author"]),
         "keywords": format_keywords(entry.get("keywords", "")),
         "abstract": entry.get("abstract", ""),
+        "year": entry.get("year", ""),
         "doi": format_doi(entry.get("doi", "")),
         "url": entry.get("url", ""),
         "id": entry["ID"],

@@ -6,7 +6,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
-from dat.database import get_document
+from dat.database import get_random_document
 from dat.database import search
 
 DATABASE_DIR = "data/"
@@ -26,7 +26,6 @@ def create_app(test_config=None):
             query = request.args.get("q", "")
 
         matches = search(DATABASE_DIR, query)
-        data = matches
 
         if matches:
             duration = datetime.datetime.now() - start
@@ -36,15 +35,15 @@ def create_app(test_config=None):
 
         return render_template(
             "index.html",
-            data=data,
+            data=matches,
             query=query,
             duration=duration,
         )
 
-    @app.route("/view/<int:identifier>/", methods=["GET"])
-    def view(identifier):
-        document = get_document(DATABASE_DIR, identifier)
-        return render_template("view.html", document=document)
+    @app.route("/random", methods=["POST"])
+    def random():
+        matches = get_random_document(DATABASE_DIR)
+        return render_template("index.html", data=matches)
 
     @app.route("/about")
     def about():

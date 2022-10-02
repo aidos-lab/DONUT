@@ -14,6 +14,14 @@
           {{ document.author | join(', ') }}
         </address>
 
+        {% if document.abstract | length %}
+        <details>
+          <summary>Abstract</summary>
+
+          {{ document.abstract }}
+        </details>
+        {% endif %}
+
         {% if document.keywords is defined %}
         <div class="tags">
           <ul>
@@ -26,6 +34,7 @@
           </ul>
         </div>
         {% endif %}
+
 
         <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>

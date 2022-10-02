@@ -15,13 +15,13 @@ def create_app(test_config=None):
 
     @app.route("/", methods=["GET", "POST"])
     def index():
-        data = None
-        query = None
-
-        if request.form:
+        if request.method == "POST":
             query = request.form["query"]
-            matches = search(DATABASE_DIR, request.form["query"])
-            data = matches
+        else:
+            query = request.args.get("q", "")
+
+        matches = search(DATABASE_DIR, query)
+        data = matches
 
         return render_template("index.html", data=data, query=query)
 

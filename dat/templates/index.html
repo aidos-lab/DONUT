@@ -21,8 +21,17 @@
             ({{ document.year }})
           {% endif %}
         </h1>
+
+        {% set authors = [] %}
+
+        {% for author in document.author %}
+          {% set url = url_for("index", q='author:"' ~ author ~ '"') %}
+          {% set url = '<a href=' ~ url ~ '>' ~ author ~ '</a>' %}
+          {% set z = authors.append(url) %}
+        {% endfor %}
+
         <address>
-          {{ document.author | join(', ') }}
+          {{ authors | join(', ') | safe }}
         </address>
 
         {% if document.abstract | length %}

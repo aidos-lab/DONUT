@@ -15,7 +15,12 @@
       <article>
         {% set document = d["document"] %}
 
-        <h1>{{ document.title }}</h1>
+        <h1>
+          {{ document.title }}
+          {% if document.year | length %}
+            ({{ document.year }})
+          {% endif %}
+        </h1>
         <address>
           {{ document.author | join(', ') }}
         </address>

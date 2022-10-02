@@ -68,6 +68,26 @@ def index_documents(data_filename, database_dir):
 
 
 def search(database_dir, query_str):
+    """Search data base with given query string.
+
+    Parameters
+    ----------
+    database_dir : str
+        Directory of database
+
+    query_str : str or None
+        String to search database for. If `None`, the method will return
+        `None` as well.
+
+    Returns
+    -------
+    List of dict or None
+        Matches corresponding to the query or `None`, if no query string was
+        provided.
+    """
+    if query_str is None:
+        return None
+
     db = xapian.Database(database_dir)
 
     queryparser = xapian.QueryParser()

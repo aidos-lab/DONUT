@@ -9,6 +9,12 @@ body
   padding:      0 10px;
 }
 
+.query-statistics
+{
+  font-size:  small;
+  text-align: right;
+}
+
 .navigation
 {
   list-style-type: none;

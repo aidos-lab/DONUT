@@ -2,6 +2,12 @@
 
 {% block content %}
 
+  {% if duration is not none %}
+  <div class="query-statistics">
+    (execution time: {{ duration }}s)
+  </div>
+  {% endif %}
+
   {% if data is not none %}
   <ol class="search-results">
     {% for d in data %}

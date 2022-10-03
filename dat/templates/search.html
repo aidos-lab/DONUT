@@ -4,7 +4,7 @@
     {% if query is none %}
       {% set query = "" %}
     {% endif %}
-    <form method="post">
+    <form action={{ url_for('index') }} method="post">
       <input autofocus
         type="text"
         placeholder="Search terms"

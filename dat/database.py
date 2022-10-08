@@ -86,7 +86,9 @@ def search(database_dir, query_str):
         Matches corresponding to the query or `None`, if no query string was
         provided.
     """
-    if query_str is None:
+    # Being explicit here: whether the string is empty or `None`, we
+    # will always return *no* matches.
+    if query_str is None or query_str == "":
         return None
 
     db = xapian.Database(database_dir)

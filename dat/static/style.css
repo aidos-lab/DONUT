@@ -1,11 +1,3 @@
-html
-{
-  font-size:     clamp(1em, 0.909em + 0.45vmin, 1.25em);
-  max-width:     70ch;
-  padding:       calc(1vmin + .5rem);
-  margin-inline: auto;
-}
-
 body
 {
   font-family:  "IBM Plex Sans", sans-serif;
@@ -13,6 +5,18 @@ body
   font-size:    18px;
   color:        #444444;
   background:   #F2F2F2;
+
+  /* Ensures that we can format main and nav with different margins */
+  margin:       0px;
+  padding:      0px;
+}
+
+main
+{
+  font-size:     clamp(1em, 0.909em + 0.45vmin, 1.25em);
+  max-width:     70ch;
+  padding:       calc(1vmin + .5rem);
+  margin-inline: auto;
 }
 
 .query-statistics
@@ -21,17 +25,31 @@ body
   text-align: right;
 }
 
+header
+{
+  background-color: #7E7E7E;
+  width: 100%;
+}
+
 .navigation
 {
-  list-style-type: none;
-  padding-left:    0px;
-  margin:          0px;
-  width:           100%;
+  list-style-type:  none;
+  padding-left:     0px;
+  margin:           0px;
+  margin-left:      0.5em;
+  margin-right:     0.5em;
 }
 
 .navigation li
 {
-  display:         inline;
+  display: inline;
+  margin:  0.5em; 
+}
+
+.navigation a
+{
+  text-decoration: none;
+  color: white;
 }
 
 .tags ul

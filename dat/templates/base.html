@@ -16,13 +16,17 @@
     </nav>
   </header>
 
-  <section>
-  {% include "search.html" %}
-  </section>
+  <main>
 
-  <section>
-  {% block content %}{% endblock %}
-  </section>
+    <section>
+    {% include "search.html" %}
+    </section>
+
+    <section>
+    {% block content %}{% endblock %}
+    </section>
+
+  </main>
 
 </body>
 

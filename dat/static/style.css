@@ -31,6 +31,13 @@ main
   padding: 2em 1em;
 }
 
+main ul
+{
+  /* Always use a disc; there's no need for us to highlight individual
+   * levels. */
+  list-style-type: disc;
+}
+
 .query-statistics
 {
   font-size:  small;
@@ -122,6 +129,10 @@ footer
   list-style-type:  none;
   padding-left:     0px;
   margin:           0;
+
+  /* Override this to ensure that the tags are not spread out in a weird
+   * fashion */
+  text-align:       left;
 }
 
 .tags li

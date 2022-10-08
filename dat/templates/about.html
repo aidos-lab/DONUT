@@ -2,6 +2,49 @@
 
 {% block content %}
 <article>
-  We could talk a little bit about this database.
+  This is a database of applications of <a href="https://en.wikipedia.org/wiki/Topological_data_analysis">Topological Data Analysis</a>, 
+  an emerging mathematical paradigm for performing multi-scale analyses
+  of complex data sets.
+
+  <section>
+    <h1>Where is the data coming from?</h1>
+
+    <p>
+      The source for all articles in this database is a bibliographical database maintained by <a href="https://www.bgiunti.info">Barbara Giunti</a>.
+      This database is currently accessible via <a href="https://www.zotero.org/groups/2425412/tda-applications">Zotero</a>.
+      This service indexes the database daily to provide a full-text
+      search over individual articles, authors, and tags.
+    </p>
+  </section>
+
+  <section>
+    <h1>How can I report erroneous data?</h1>
+
+    <p>
+      To report an error in an article, please contact <a href="mailto:bgiunti@tugraz.at">bgiunti@tugraz.at</a>.
+      We are working on providing a direct feedback opportunity for
+      database articles as well.
+    </p>
+  </section>
+
+  <section>
+    <h1>Why is my article missing?</h1>
+
+    <p>
+      To report a missing article, please contact <a href="mailto:bgiunti@tugraz.at">bgiunti@tugraz.at</a>.
+      It is easiest to provide a BibTeX entry of your article to
+      the inclusion into the database.
+    </p>
+  </section>
+
+  <section>
+    <h1>Who maintains this database frontend?</h1>
+
+    <p>
+      This frontend was developed, hosted, and maintained by <a href="https://bastian.rieck.me">Bastian Rieck</a>.
+      It is powered by <a href="https://xapian.org">Xapian</a>, <a href="https://flask.palletsprojects.com/en/2.2.x">Flask</a>,
+      and <a href="https://www.debian.org">Debian</a>.
+    </p>
+  </section>
 </article>
 {% endblock %}

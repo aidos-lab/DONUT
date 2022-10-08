@@ -77,8 +77,12 @@
   {% else %}
   <h1>Usage examples</h1>
 
-  Search is case-insensitive, i.e. both &ldquo;Topology&rdquo; and &ldquo;topology&rdquo; yield the same results.
-  Here are some example queries to get you started:
+  <p>
+    Search is case-insensitive, i.e. both &ldquo;Topology&rdquo; and &ldquo;topology&rdquo; yield the same results.
+    You can use the standard operators <code>AND</code>, <code>OR</code>, and <code>NOT</code> to refine your queries.
+    Here are some example queries to get you started (you can either copy
+    and paste them or click on them to execute the respective query):
+  </p>
 
   <ul>
     <li>
@@ -86,9 +90,31 @@
       <ul>
         <li><code><a href="/?q=author%3A%22edelsbrunner%22">author:edelsbrunner</a></code></li>
         <li><code><a href="/?q=author%3A%22herbert+edelsbrunner%22">author:&quot;herbert edelsbrunner&quot;</a></code></li>
+        <li><code><a href="/?q=author%3Aedelsbrunner+NOT+author%3Aharer">author:edelsbrunner NOT author:harer</a></code></li>
       </ul>
     </li>
+
+    <li>
+      All articles tagged with a specific set of tags:
+      <ul>
+        <li><code><a href="/?q=tag%3A%22machine+learning%22">tag:&quot;machine learning&quot;</a></code></li>
+        <li><code><a href="/?q=tag%3A%22machine+learning%22+OR+tag%3Amapper">tag:&quot;machine learning&quot; OR tag:mapper</a></code></li>
+      </ul>
+    </li>
+
+    <li>
+      All articles with a specific word in their title:
+      <ul>
+        <li><code><a href="/?q=title%3Amanifold">title:manifold</a></code></li>
+        <li><code><a
+              href="/?q=title%3Amanifold+AND+title%3Alearning">title:manifold AND title:learning</a></code></li>
+      </ul>
   </ul>
+
+  <p>
+    New functionalities are constantly added. Let us know if you are
+    missing a certain query!
+  </p>
 
   {% endif %}
 

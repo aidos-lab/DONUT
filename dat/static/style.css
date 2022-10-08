@@ -1,3 +1,9 @@
+html
+{
+  scrollbar-gutter: stable;
+  overflow-y:       scroll;
+}
+
 body
 {
   font-family:  "IBM Plex Sans", sans-serif;

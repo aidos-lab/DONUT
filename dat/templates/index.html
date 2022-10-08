@@ -70,11 +70,26 @@
           </ul>
         </div>
         {% endif %}
-        <a href="{{ url_for('view', identifier=d['id']) }}">(View)</a>
       </article>
     </li>
     {% endfor %}
   </ol>
+  {% else %}
+  <h1>Usage examples</h1>
+
+  Search is case-insensitive, i.e. both &ldquo;Topology&rdquo; and &ldquo;topology&rdquo; yield the same results.
+  Here are some example queries to get you started:
+
+  <ul>
+    <li>
+      All articles of a certain author:
+      <ul>
+        <li><code><a href="/?q=author%3A%22edelsbrunner%22">author:edelsbrunner</a></code></li>
+        <li><code><a href="/?q=author%3A%22herbert+edelsbrunner%22">author:&quot;herbert edelsbrunner&quot;</a></code></li>
+      </ul>
+    </li>
+  </ul>
+
   {% endif %}
 
 {% endblock %}

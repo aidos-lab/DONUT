@@ -6,30 +6,41 @@ html
 
 body
 {
-  font-family:  "IBM Plex Sans", sans-serif;
+  font-family:  sans-serif;
   line-height:  1.6;
-  font-size:    18px;
-  color:        #444444;
+
+  color:        #444;
   background:   #F2F2F2;
 
   /* Ensures that we can format main and nav with different margins */
   margin:       0px;
   padding:      0px;
+
+  /* Don't hate me too much. */
+  text-align: justify;
 }
 
 main
 {
-  font-size:     clamp(1em, 0.909em + 0.45vmin, 1.25em);
-  max-width:     70ch;
-  padding:       calc(1vmin + .5rem);
-  text-align:    justify;
-  margin-inline: auto;
+  /* Main content should be centred, but we don't want too many
+   * characters in one line */
+  max-width:     80ch;
+  margin:        auto;
+
+  /* Let the content breathe nicely. */
+  padding: 2em 1em;
 }
 
 .query-statistics
 {
   font-size:  small;
   text-align: right;
+}
+
+/* Make headers and strong text stand out a little bit */
+h1, h2, strong
+{
+  color: #333;
 }
 
 header
@@ -42,30 +53,40 @@ footer
   border-top: 1px solid black;
 }
 
-footer p
+#header-text, #footer-text
 {
   margin-left:      0.5em;
   margin-right:     0.5em;
 }
 
-.navigation
+#search
 {
-  list-style-type:  none;
-  padding-left:     0px;
-  margin:           0px;
-  margin-left:      0.5em;
-  margin-right:     0.5em;
+  margin:         auto;
+  padding-top:    1rem;
+  padding-bottom: 1rem;
+  text-align:     center;
 }
 
-.navigation li
+#search input[type=text]
 {
-  display: inline;
-  margin:  0.5em; 
+  margin:      auto;
+  display:     block;
+  width:       100%;
+  min-height:  2.5em;
+
+  border: 1px solid #E8E8E8;
 }
 
-.navigation a
+#search input[type=text]:focus
 {
-  text-decoration: none;
+  /* TODO: different width? */
+  outline: solid black;
+}
+
+#search button
+{
+  display:    block-inline;
+  margin-top: 0.5em;
 }
 
 .tags ul
@@ -93,29 +114,6 @@ footer p
 {
   color:           white;
   text-decoration: none;
-}
-
-.search
-{
-  margin:         auto;
-  padding-top:    1rem;
-  padding-bottom: 1rem;
-  text-align:     center;
-}
-
-.search button
-{
-  display:    block-inline;
-  margin-top: 0.5em;
-}
-
-.search input[type=text]
-{
-  margin:      auto;
-  display:     block;
-  width:       75%;
-  line-height: 4.0;
-  border: 1px solid E8E8E8;
 }
 
 .search-results
@@ -155,9 +153,4 @@ footer p
 .references li
 {
   display: inline;
-}
-
-h1, h2, h3
-{
-  line-height:1.2
 }

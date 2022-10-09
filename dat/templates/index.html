@@ -24,6 +24,7 @@
     {% for d in data %}
     <li class="search-result">
       <article>
+        {% set id = d["id"] %}
         {% set document = d["document"] %}
 
         <h1>
@@ -67,6 +68,10 @@
             </li>
           {% endif %}
 
+          <li>
+            {% set url = url_for("export", identifier=id) %}
+            <a href="{{ url }}">Export citation</a>
+          </li>
         </ul>
 
         {% if document.keywords is defined %}

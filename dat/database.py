@@ -131,16 +131,21 @@ def search(database_dir, query_str):
     return matches
 
 
+def get_document(database_dir, identifier):
+    """Return specific document from database."""
+    db = xapian.Database(database_dir)
+    document = db.get_document(identifier)
+
+    return _build_match(document)
+
+
 def get_random_document(database_dir):
     """Return random document from database."""
     db = xapian.Database(database_dir)
     identifier = random.randint(1, db.get_lastdocid())
     document = db.get_document(identifier)
 
-    # Note that we pretend that we are providing a list of documents
-    # here. This make the results compatible with the rest of the
-    # interface.
-    return [_build_match(document)]
+    return _build_match(document)
 
 
 def get_tags(database_dir):

@@ -129,4 +129,14 @@ def get_entries(filename):
     entries = [e for e in db.entries if "year" in e]
     entries = [process_entry(e) for e in entries]
 
+    # Read file again without any customisations, thus making it
+    # possible for us to include the "raw" entry.
+    parser = BibTexParser(common_strings=True)
+
+    with open(filename) as f:
+        db = bibtexparser.load(f, parser=parser)
+
+    raw_entries = [e for e in db.entries if "year" in e]
+    entries = [dict(e, **{"raw": r}) for e, r in zip(entries, raw_entries)]
+
     return entries

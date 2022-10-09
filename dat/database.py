@@ -68,6 +68,13 @@ def index_documents(data_filename, database_dir):
         db.replace_document(id_term, doc)
 
 
+def _build_match(document):
+    """Build match from document."""
+    identifier = document.get_docid()
+    data = json.loads(document.get_data())
+    return {"id": identifier, "document": data}
+
+
 def search(database_dir, query_str):
     """Search data base with given query string.
 
@@ -114,12 +121,7 @@ def search(database_dir, query_str):
 
         print(json.dumps(data, indent=4))
 
-        matches.append(
-            {
-                "id": match.docid,
-                "document": data,
-            }
-        )
+        matches.append(_build_match(match.document))
 
     return matches
 
@@ -130,7 +132,7 @@ def get_random_document(database_dir):
     identifier = random.randint(1, db.get_lastdocid())
     document = db.get_document(identifier)
 
-    # TODO: Turn this into a stand-alone function to ensure that matches
-    # are always handled the same.
-    data = json.loads(document.get_data())
-    return [{"id": identifier, "document": data}]
+    # Note that we pretend that we are providing a list of documents
+    # here. This make the results compatible with the rest of the
+    # interface.
+    return [_build_match(document)]

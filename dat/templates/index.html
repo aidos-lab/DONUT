@@ -10,6 +10,14 @@
 
   {% if data is not none %}
   <ol id="search-results">
+    {% if data | length == 0 %}
+      <p>
+        Oh no, your query returned no results! It is possible that we do not
+        have the requested document in our database. Try another query
+        or notify us about the missing document via <a href="mailto:db@topology.rocks?subject=Missing%20document">db@topology.rocks</a>.
+      </p>
+    {% endif %}
+
     {% for d in data %}
     <li class="search-result">
       <article>

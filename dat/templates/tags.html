@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul class="tags">
+  {% for tag in tags %}
+  <li>
+    {% set keyword = tag[0] %}
+    {% set count = tag[1] %}
+    {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
+    <span>
+      <a href={{ url}}>{{ keyword }} ({{ count }})</a>
+    </span>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

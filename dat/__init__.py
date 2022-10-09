@@ -7,6 +7,7 @@ from flask import render_template
 from flask import request
 
 from dat.database import get_random_document
+from dat.database import get_tags
 from dat.database import search
 
 from xapian import QueryParserError
@@ -53,5 +54,10 @@ def create_app(test_config=None):
     @app.route("/about")
     def about():
         return render_template("about.html")
+
+    @app.route("/tags")
+    def tags():
+        tags = get_tags(DATABASE_DIR)
+        return render_template("tags.html", tags=sorted(tags.items()))
 
     return app

@@ -1,5 +1,6 @@
 """Database module."""
 
+import collections
 import json
 import random
 import xapian
@@ -140,3 +141,18 @@ def get_random_document(database_dir):
     # here. This make the results compatible with the rest of the
     # interface.
     return [_build_match(document)]
+
+
+def get_tags(database_dir):
+    """Return all tags of all documents."""
+    db = xapian.Database(database_dir)
+    tags = collections.Counter()
+
+    for item in db.postlist(""):
+        identifier = item.docid
+        document = db.get_document(identifier)
+        data = json.loads(document.get_data())
+
+        tags.update([keyword.lower() for keyword in data["keywords"]])
+
+    return tags

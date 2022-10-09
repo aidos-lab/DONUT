@@ -167,3 +167,11 @@ footer
 {
   display: inline;
 }
+
+.error
+{
+  border:           1px solid #C41E3A;
+  border-radius:    2.5px;
+  background-color: #C41E3A11;
+  padding:          0.5em;
+}

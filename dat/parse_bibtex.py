@@ -86,7 +86,11 @@ def format_authors(authors):
 
 def format_keywords(keywords):
     """Format keywords by stripping away leading decimals."""
-    return [keyword.split("-")[-1].strip() for keyword in keywords.split(",")]
+    # We only split at the *first* occurrence of the keyword because
+    # some keywords contain additional hyphens.
+    return [
+        keyword.split("-", 1)[-1].strip() for keyword in keywords.split(",")
+    ]
 
 
 def format_doi(doi):

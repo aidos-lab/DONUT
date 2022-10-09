@@ -124,7 +124,7 @@ footer
   font-size: inherit;
 }
 
-.tags ul
+.tags
 {
   list-style-type:  none;
   padding-left:     0px;
@@ -135,9 +135,8 @@ footer
   text-align:       left;
 }
 
-.tags li
+.tags span
 {
-  display:        inline-block;
   font-size:      small;
   font-weight:    600;
   text-transform: lowercase;
@@ -153,6 +152,13 @@ footer
 {
   color:           white;
   text-decoration: none;
+}
+
+/* Only use this for inline tags, i.e. the tags that are accompanying
+ * each of the articles */
+.inline-tag
+{
+  display: inline-block;
 }
 
 .references

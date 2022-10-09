@@ -70,16 +70,16 @@
         </ul>
 
         {% if document.keywords is defined %}
-        <div class="tags">
-          <ul>
-            {% for keyword in document.keywords %}
-            <li>
+        <ul class="tags">
+          {% for keyword in document.keywords %}
+          <li class="inline-tag">
+            <span>
               {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
               <a href={{ url}}>{{ keyword }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
         {% endif %}
       </article>
     </li>

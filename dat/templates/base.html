@@ -12,13 +12,14 @@
       <div id="header-text">
         <a href="/">Home</a>
         &#10086;
+        <a href="/tags">Tags</a>
+        &#10086;
         <a href="/about">About</a>
       </div>
     </nav>
   </header>
 
   <main>
-
     <section>
     {% include "search.html" %}
     </section>
@@ -26,7 +27,6 @@
     <section>
     {% block content %}{% endblock %}
     </section>
-
   </main>
 
   <footer>

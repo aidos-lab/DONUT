@@ -115,8 +115,12 @@ def search(database_dir, query_str):
     enquire = xapian.Enquire(db)
     enquire.set_query(query)
 
+    # TODO: Potential bottleneck if the database grows very large. Maybe
+    # we should rather add some pagination here?
+    n_documents = db.get_doccount()
+
     matches = []
-    for match in enquire.get_mset(0, 10):
+    for match in enquire.get_mset(0, n_documents):
         data = json.loads(match.document.get_data())
 
         print(json.dumps(data, indent=4))

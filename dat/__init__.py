@@ -1,11 +1,17 @@
 """Main Flask module."""
 
 import datetime
+import io
+
+from bibtexparser.bwriter import BibTexWriter
+from bibtexparser.bibdatabase import BibDatabase
 
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import send_file
 
+from dat.database import get_document
 from dat.database import get_random_document
 from dat.database import get_tags
 from dat.database import search
@@ -48,7 +54,7 @@ def create_app(test_config=None):
 
     @app.route("/random", methods=["POST"])
     def random():
-        matches = get_random_document(DATABASE_DIR)
+        matches = [get_random_document(DATABASE_DIR)]
         return render_template("index.html", data=matches, duration=None)
 
     @app.route("/about")
@@ -59,5 +65,29 @@ def create_app(test_config=None):
     def tags():
         tags = get_tags(DATABASE_DIR)
         return render_template("tags.html", tags=sorted(tags.items()))
+
+    @app.route("/export/<int:identifier>")
+    def export(identifier):
+        document = get_document(DATABASE_DIR, identifier)
+
+        # Prepare document for export by renaming some of the keys. Not
+        # a big fan of this, but it's easier than storing everything.
+
+        db = BibDatabase()
+        db.entries = [document["document"]["raw"]]
+
+        writer = BibTexWriter()
+        buffer = io.BytesIO()
+        buffer.write(writer.write(db).encode())
+        buffer.seek(0)
+
+        name = document["document"]["raw"]["ID"] + ".bib"
+
+        return send_file(
+            buffer,
+            as_attachment=True,
+            download_name=name,
+            mimetype="application/x-bibtex",
+        )
 
     return app

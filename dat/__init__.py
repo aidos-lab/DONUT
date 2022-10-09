@@ -9,6 +9,8 @@ from flask import request
 from dat.database import get_random_document
 from dat.database import search
 
+from xapian import QueryParserError
+
 DATABASE_DIR = "data/"
 
 
@@ -25,7 +27,10 @@ def create_app(test_config=None):
         else:
             query = request.args.get("q", "")
 
-        matches = search(DATABASE_DIR, query)
+        try:
+            matches = search(DATABASE_DIR, query)
+        except QueryParserError:
+            return render_template("error.html", query=query)
 
         if matches:
             duration = datetime.datetime.now() - start
@@ -43,7 +48,7 @@ def create_app(test_config=None):
     @app.route("/random", methods=["POST"])
     def random():
         matches = get_random_document(DATABASE_DIR)
-        return render_template("index.html", data=matches)
+        return render_template("index.html", data=matches, duration=None)
 
     @app.route("/about")
     def about():

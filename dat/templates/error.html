@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="error">
+  <h1>Error: Unable to parse query</h1>
+
+  <p>
+    The query parser was unable to parse your query correctly because it was malformed.
+    Take a look at the <a href="{{ url_for('index') }}">usage
+    examples</a> and try again.
+  </p>
+</article>
+{% endblock %}

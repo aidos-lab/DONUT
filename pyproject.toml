@@ -14,7 +14,6 @@ titlecase = "^2.4"
 Flask = "^2.2.2"
 pyzotero = "^1.5.5"
 python-dotenv = "^0.21.0"
-xapian-bindings = "^0.1.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -31,7 +31,7 @@ def get_git_revision():
     )
 
 
-def create_app(test_config=None):
+def create(test_config=None):
     """Create main application."""
     app = Flask(__name__)
     app.jinja_env.globals.update(get_git_revision=get_git_revision)

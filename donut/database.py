@@ -5,7 +5,7 @@ import json
 import random
 import xapian
 
-from dat.parse_bibtex import get_entries
+from donut.parse_bibtex import get_entries
 
 
 def index_documents(data_filename, database_dir):

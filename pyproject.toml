@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "dat"
+name = "donut"
 version = "0.1.0"
-description = "Database of Applications of Topology"
+description = "Database of Original and Novel Uses of Topology"
 authors = ["Bastian Rieck <bastian@rieck.me>"]
 readme = "README.md"
 
@@ -14,7 +14,7 @@ titlecase = "^2.4"
 Flask = "^2.2.2"
 pyzotero = "^1.5.5"
 python-dotenv = "^0.21.0"
-
+xapian-bindings = "^0.1.0"
 
 [build-system]
 requires = ["poetry-core"]

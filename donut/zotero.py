@@ -9,7 +9,7 @@ such as tags, can be easily accommodated.
 from dotenv import load_dotenv
 from pyzotero import zotero
 
-from dat.database import index_documents
+from donut.database import index_documents
 
 import bibtexparser
 import os

@@ -1,4 +1,6 @@
-# Installation Journal
+# DONUT: Database of Original and Notable Uses of Topology
+
+## Installation Journal
 
 - Setup virtual environment
 - Install `xapian` on system
@@ -15,7 +17,7 @@ $ source .venv/bin/activate
 $ pip install .
 ```
 
-# Updating the Database
+## Updating the Database
 
 Should run in a cron job:
 

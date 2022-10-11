@@ -85,12 +85,35 @@ def format_authors(authors):
 
 
 def format_keywords(keywords):
-    """Format keywords by stripping away leading decimals."""
-    # We only split at the *first* occurrence of the keyword because
-    # some keywords contain additional hyphens.
-    return [
-        keyword.split("-", 1)[-1].strip() for keyword in keywords.split(",")
-    ]
+    """Format keywords by stripping away leading decimals.
+
+    Returns
+    -------
+    List of tuples
+        List of (category, keyword) pairs, with categories being spelled
+        out according to the labelling scheme.
+    """
+    formatted_keywords = []
+    for keyword in keywords.split(","):
+        # We only split at the *first* occurrence of the keyword because
+        # some keywords contain additional hyphens.
+        tokens = keyword.split("-", 1)
+
+        # This skips "bare" keywords; we handle those by assigning the
+        # type of applicaion instead.
+        if len(tokens) == 2:
+            category = tokens[0].strip()
+            keyword = tokens[1].strip()
+
+            category_map = {
+                "1": "applications",
+                "2": "tools",
+                "3": "data",
+            }
+
+            formatted_keywords.append((category_map[category], keyword))
+
+    return formatted_keywords
 
 
 def format_doi(doi):

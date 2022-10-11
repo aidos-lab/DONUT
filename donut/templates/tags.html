@@ -2,17 +2,31 @@
 
 {% block content %}
 
-<ul class="tags">
-  {% for tag in tags %}
-  <li>
-    {% set keyword = tag[0] %}
-    {% set count = tag[1] %}
-    {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
-    <span>
-      <a href={{ url}}>{{ keyword }} ({{ count }})</a>
-    </span>
-  </li>
+<section>
+  <p>Jump directly to one of the categories here:</p>
+  <ul>
+  {% for category in tags %}
+    <li><a href="#{{ category }}">{{ category.title() }}</a></li>
   {% endfor %}
-</ul>
+  </ul>
+</section>
+
+{% for category in tags %}
+  <section id="{{ category }}">
+    <h1>{{ category.title() }}</h1>
+    <ul class="tags">
+    {% for tag in tags[category] %}
+      <li>
+        {% set keyword = tag[0] %}
+        {% set count = tag[1] %}
+        {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
+        <span>
+          <a href={{ url}}>{{ keyword }} ({{ count }})</a>
+        </span>
+      </li>
+    {% endfor %}
+    </ul>
+  </section>
+{% endfor %}
 
 {% endblock %}

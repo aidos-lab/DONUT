@@ -64,7 +64,13 @@ def create_app(test_config=None):
     @app.route("/tags")
     def tags():
         tags = get_tags(DATABASE_DIR)
-        return render_template("tags.html", tags=sorted(tags.items()))
+
+        tags = {
+            category: sorted(keywords.items())
+            for category, keywords in sorted(tags.items())
+        }
+
+        return render_template("tags.html", tags=tags)
 
     @app.route("/export/<int:identifier>")
     def export(identifier):

@@ -54,7 +54,9 @@ def index_documents(data_filename, database_dir):
 
         termgenerator.increase_termpos()
 
-        for keyword in entry["keywords"]:
+        # We deliberately ignore any categories here. The categories
+        # will only be relevant for rendering later on.
+        for _, keyword in entry["keywords"]:
             termgenerator.index_text(keyword, 1, "K")
             termgenerator.index_text(keyword)
 
@@ -149,15 +151,24 @@ def get_random_document(database_dir):
 
 
 def get_tags(database_dir):
-    """Return all tags of all documents."""
+    """Return all tags of all documents.
+
+    Returns
+    -------
+    dict of counters
+        The outer dictionary will contain the overall tag categories,
+        such as "applications", whereas each value of the dictionary
+        will be a counter with the respective tags.
+    """
     db = xapian.Database(database_dir)
-    tags = collections.Counter()
+    tags = collections.defaultdict(collections.Counter)
 
     for item in db.postlist(""):
         identifier = item.docid
         document = db.get_document(identifier)
         data = json.loads(document.get_data())
 
-        tags.update([keyword.lower() for keyword in data["keywords"]])
+        for category, keyword in data["keywords"]:
+            tags[category][keyword.lower()] += 1
 
     return tags

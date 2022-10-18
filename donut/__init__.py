@@ -2,6 +2,7 @@
 
 import datetime
 import io
+import subprocess
 
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
@@ -21,9 +22,19 @@ from xapian import QueryParserError
 DATABASE_DIR = "data/"
 
 
+def get_git_revision():
+    """Return git short revision string."""
+    return (
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        .decode("ascii")
+        .strip()
+    )
+
+
 def create_app(test_config=None):
     """Create main application."""
     app = Flask(__name__)
+    app.jinja_env.globals.update(get_git_revision=get_git_revision)
 
     @app.route("/", methods=["GET", "POST"])
     def index():

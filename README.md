@@ -22,3 +22,7 @@ $ pip install .
 Should run in a cron job:
 
     python -m dat.zotero
+
+## Running the app
+
+    flask --app donut:create run

@@ -68,9 +68,13 @@ def create(test_config=None):
         matches = [get_random_document(DATABASE_DIR)]
         return render_template("index.html", data=matches, duration=None)
 
-    @app.route("/about")
-    def about():
-        return render_template("about.html")
+    @app.route("/faq")
+    def faq():
+        return render_template("faq.html")
+
+    @app.route("/contributors")
+    def contributors():
+        return render_template("contributors.html")
 
     @app.route("/tags")
     def tags():

@@ -21,7 +21,7 @@ $ pip install .
 
 Should run in a cron job:
 
-    python -m dat.zotero
+    python -m donut.zotero
 
 ## Running the app
 

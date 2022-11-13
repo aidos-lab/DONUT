@@ -3,6 +3,7 @@
 import collections
 import json
 import random
+import unidecode
 import xapian
 
 from donut.parse_bibtex import get_entries
@@ -44,6 +45,13 @@ def index_documents(data_filename, database_dir):
         for author in authors:
             termgenerator.index_text(author, 1, "A")
             termgenerator.index_text(author)
+
+            # Make sure that we can properly handle authors whose names
+            # include accents.
+            author_normalised = unidecode.unidecode(author)
+            if author != author_normalised:
+                termgenerator.index_text(author_normalised, 1, "A")
+                termgenerator.index_text(author_normalised)
 
         termgenerator.increase_termpos()
 

@@ -1,6 +1,18 @@
 # DONUT: Database of Original and Notable Uses of Topology
 
-## Installation Journal
+This is the code for [DONUT](https://donut.topology.rocks), a search
+engine for applications of topology. This repository contains the code
+for the backend in case you want to run this search engine for yourself.
+
+**Please use this repository to report any usability issues and
+technical errors only. For missing articles, contact
+donut@topology.rocks.**
+
+# Setup
+
+DONUT is relatively easy to set up. These notes are a work in progress.
+
+## Installation
 
 - Setup virtual environment
 - Install `xapian` on system
@@ -19,7 +31,7 @@ $ pip install .
 
 ## Updating the Database
 
-Should run in a cron job:
+Install a cron job  that runs the following command:
 
     python -m donut.zotero
 

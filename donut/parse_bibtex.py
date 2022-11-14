@@ -161,8 +161,6 @@ def get_entries(filename):
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
 
-    print(len(db.entries))
-
     entries = [e for e in db.entries if "year" in e or "date" in e]
     entries = [process_entry(e) for e in entries]
 

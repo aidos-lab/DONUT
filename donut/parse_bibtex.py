@@ -1,6 +1,9 @@
 """Parse BibTeX file into records."""
 
 import bibtexparser
+import warnings
+
+import dateutil.parser
 
 from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import author
@@ -61,6 +64,15 @@ def format_title(entry):
     raw_title = fix_raw_latex(raw_title)
 
     return raw_title
+
+
+def format_year(entry):
+    """Get year information from entry or try to parse it."""
+    if "year" in entry:
+        return entry.get("year")
+
+    date = dateutil.parser.parse(entry.get("date", ""))
+    return date.year()
 
 
 def format_authors(authors):
@@ -132,7 +144,7 @@ def process_entry(entry):
         "author": format_authors(entry["author"]),
         "keywords": format_keywords(entry.get("keywords", "")),
         "abstract": entry.get("abstract", ""),
-        "year": entry.get("year", ""),
+        "year": format_year(entry),
         "doi": format_doi(entry.get("doi", "")),
         "url": entry.get("url", ""),
         "id": entry["ID"],
@@ -149,7 +161,9 @@ def get_entries(filename):
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
 
-    entries = [e for e in db.entries if "year" in e]
+    print(len(db.entries))
+
+    entries = [e for e in db.entries if "year" in e or "date" in e]
     entries = [process_entry(e) for e in entries]
 
     # Read file again without any customisations, thus making it

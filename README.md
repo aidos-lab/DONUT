@@ -1,4 +1,4 @@
-# DONUT: Database of Original and Notable Uses of Topology
+# DONUT: Database of Original and Non-Theoretical Uses of Topology
 
 This is the code for [DONUT](https://donut.topology.rocks), a search
 engine for applications of topology. This repository contains the code

@@ -125,6 +125,13 @@ def format_keywords(keywords):
 
             formatted_keywords.append((category_map[category], keyword))
 
+        # Bare keyword, which indicates the "flavour" of a method, i.e.
+        # whether the method contributes something new or confirms some
+        # existing theory.
+        elif len(tokens) == 1: 
+            flavour = tokens[0].strip()
+            formatted_keywords.append(("flavour", flavour))
+
     return formatted_keywords
 
 

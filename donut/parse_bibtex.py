@@ -171,7 +171,7 @@ def get_entries(filename):
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
 
-    raw_entries = [e for e in db.entries if "year" in e]
+    raw_entries = [e for e in db.entries if "year" in e or "date" in e]
     entries = [dict(e, **{"raw": r}) for e, r in zip(entries, raw_entries)]
 
     return entries

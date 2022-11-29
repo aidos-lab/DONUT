@@ -132,7 +132,6 @@ def search(database_dir, query_str):
 
     matches = []
     for match in enquire.get_mset(0, n_documents):
-        data = json.loads(match.document.get_data())
         matches.append(_build_match(match.document))
 
     return matches

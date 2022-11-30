@@ -4,7 +4,7 @@
 
   {% if duration is not none %}
   <div class="query-statistics">
-    (execution time: {{ duration }}s)
+    (found {{ data | length }} matches in {{ duration }}s)
   </div>
   {% endif %}
 

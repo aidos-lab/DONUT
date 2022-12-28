@@ -2,7 +2,10 @@
 
 import datetime
 import io
+import os
 import subprocess
+
+from dotenv import load_dotenv
 
 from bibtexparser.bwriter import BibTexWriter
 from bibtexparser.bibdatabase import BibDatabase
@@ -19,7 +22,10 @@ from donut.database import search
 
 from xapian import QueryParserError
 
-DATABASE_DIR = "data/"
+# Make sure that we have access to the database directory and other
+# information that we require.
+load_dotenv()
+DATABASE_DIR = os.getenv("DATABASE_DIR")
 
 
 def get_git_revision():

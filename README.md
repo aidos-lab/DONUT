@@ -8,6 +8,21 @@ for the backend in case you want to run this search engine for yourself.
 technical errors only. For missing articles, contact
 donut@topology.rocks.**
 
+# Citing or acknowledging DONUT
+
+Please use the following BibTeX citation when citing or acknowledging
+DONUT in your own work:
+
+```bibtex
+@misc{DONUT,
+  author = {Giunti, Barbara and Lazovskis, J{\=a}nis and Rieck, Bastian},
+  title  = {DONUT: Database of Original \& Non-Theoretical Uses of Topology},
+  url    = {https://donut.topology.rocks},
+  year   = {2022},
+  key    = {DONUT},
+}
+```
+
 # Setup
 
 DONUT is relatively easy to set up. These notes are a work in progress.

@@ -181,3 +181,8 @@ footer
   background-color: #C41E3A11;
   padding:          0.5em;
 }
+
+pre
+{
+  padding: 0.5em 0.5em;
+}

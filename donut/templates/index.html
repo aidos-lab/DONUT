@@ -105,6 +105,8 @@
     <p>
       Search is case-insensitive, i.e. both &ldquo;Topology&rdquo; and &ldquo;topology&rdquo; yield the same results.
       You can use the standard operators <code>AND</code>, <code>OR</code>, and <code>NOT</code> to refine your queries.
+      Wildcard queries are supported using the <code>&ast;</code>
+      character.
       Here are some example queries to get you started (you can either copy
       and paste them or click on them to execute the respective query):
     </p>
@@ -115,6 +117,15 @@
         <ul>
           <li><code><a href="/?q=author%3A%22robins%22">author:robins</a></code></li>
           <li><code><a href="/?q=author%3A%22vanessa+robins%22">author:&quot;vanessa robins&quot;</a></code></li>
+        </ul>
+      </li>
+
+      <li>
+        All articles containing a certain substring: 
+        <ul>
+          <li><code><a href="/?q=hom%2A">hom&ast;</a></code></li>
+          <li><code><a href="/?q=%2Aogy">&ast;ogy</a></code></li>
+
         </ul>
       </li>
 

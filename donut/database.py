@@ -121,7 +121,11 @@ def search(database_dir, query_str):
     queryparser.add_prefix("tag", "K")
     queryparser.add_prefix("keyword", "K")
 
-    query = queryparser.parse_query(query_str)
+    # Enable wildcard searches for the query as well. That way, folks
+    # can improve their queries.
+    query = queryparser.parse_query(
+        query_str, queryparser.FLAG_WILDCARD | queryparser.FLAG_DEFAULT
+    )
 
     enquire = xapian.Enquire(db)
     enquire.set_query(query)

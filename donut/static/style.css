@@ -161,6 +161,21 @@ footer
   display: inline-block;
 }
 
+span.inline-tag-applications
+{
+  background: #66c2a5;
+}
+
+span.inline-tag-tools
+{
+  background: #fc8d62;
+}
+
+span.inline-tag-data
+{
+  background: #8da0cb;
+}
+
 .references
 {
   list-style-type: none;

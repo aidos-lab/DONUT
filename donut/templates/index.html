@@ -78,9 +78,10 @@
         {% if document.keywords is defined %}
         <ul class="tags">
           {% for keyword in document.keywords %}
+          {% set type = keyword[0] %}
           {% set keyword = keyword[1] %}
           <li class="inline-tag">
-            <span>
+            <span class="inline-tag-{{ type}}">
               {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
               <a href={{ url}}>{{ keyword }}</a>
             </span>

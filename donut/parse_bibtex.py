@@ -127,15 +127,13 @@ def format_keywords(keywords):
             # searchable using *both* tags. If an article is tagged
             # "images:3d", for example, we want it to appear when you
             # search for "images" and when you search for "images:3d".
-            #
-            # TODO: We currently only support a single hierarchical
-            # split.
             if ":" in keyword:
-                parent = keyword.split(":")[0]
+                parents = keyword.split(":")[:-1]
 
                 # Add only the parent keyword; the full keyword will be
                 # added afterwards anyway.
-                formatted_keywords.append((category_map[category], parent))
+                for parent in parents:
+                    formatted_keywords.append((category_map[category], parent))
 
             formatted_keywords.append((category_map[category], keyword))
 

@@ -20,6 +20,8 @@ from donut.database import get_random_document
 from donut.database import get_tags
 from donut.database import search
 
+from donut.utils import flat_tags_to_hierarchy
+
 from xapian import QueryParserError
 
 # Make sure that we have access to the database directory and other
@@ -91,6 +93,7 @@ def create(test_config=None):
             for category, keywords in sorted(tags.items())
         }
 
+        tags = flat_tags_to_hierarchy(tags)
         return render_template("tags.html", tags=tags)
 
     @app.route("/export/<int:identifier>")

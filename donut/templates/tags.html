@@ -16,14 +16,21 @@
     <h1>{{ category.title() }}</h1>
     <ul class="tags">
     {% for tag in tags[category] %}
-      <li>
-        {% set keyword = tag[0] %}
-        {% set count = tag[1] %}
-        {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
-        <span>
-          <a href={{ url}}>{{ keyword }} ({{ count }})</a>
-        </span>
-      </li>
+      {% set keyword = tag[0] %}
+      {% set count = tag[1] %}
+
+      {% if keyword == "L+" %}
+        <ul class="tags-nested">
+      {% elif keyword == "L-" %}
+        </ul>
+      {% else %}
+        <li>
+          {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
+          <span>
+            <a href={{ url}}>{{ keyword }} ({{ count }})</a>
+          </span>
+        </li>
+      {% endif %}
     {% endfor %}
     </ul>
   </section>

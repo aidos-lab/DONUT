@@ -135,6 +135,11 @@ footer
   text-align:       left;
 }
 
+.tags-nested
+{
+  list-style-type: none;
+}
+
 .tags span
 {
   font-size:      small;

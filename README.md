@@ -44,6 +44,34 @@ $ source .venv/bin/activate
 $ pip install .
 ```
 
+Afterwards, we need to set up a `systemd` service unit to start the
+service automatically:
+
+```bash
+$ cat /etc/systemd/system/donut.service
+[Unit]
+Description=Gunicorn instance for serving "DONUT" 
+After=nginx.service
+Wants=nginx.service
+
+[Service]
+User=bastian
+Group=www-data
+WorkingDirectory=/home/bastian/Projects/DONUT
+Environment="PATH=/home/bastian/Projects/DONUT/.venv/bin:/usr/bin"
+ExecStart=/home/bastian/Projects/DONUT/.venv/bin/gunicorn --workers 4 --bind unix:donut.sock -m 007 "donut:create()"
+
+[Install]
+WantedBy=multi-user.target
+$ sudo systemctl enable donut.service
+$ sudo systemctl start donut.service
+```
+
+Presto, we are done! Notice the use of `Environment` to specify the
+environment variables required for running DONUT. Moreover, the
+`WorkingDirectory` specification is necessary to set relative paths
+for the service.
+
 ## Updating the Database
 
 Install a cron job  that runs the following command:

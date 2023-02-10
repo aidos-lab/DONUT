@@ -72,6 +72,40 @@ environment variables required for running DONUT. Moreover, the
 `WorkingDirectory` specification is necessary to set relative paths
 for the service.
 
+Finally, to make everything accessible from external hosts, you need to
+configure a new virtual host and set your web server up to handle proxy
+request. Here is how I did that for `nginx`:
+
+```
+$ cat /etc/nginx/sites-available/donut.topology.rocks 
+server
+{
+  listen 80;
+  server_name donut.topology.rocks;
+
+  # enforce HTTPS
+  return 301 https://$server_name$request_uri;
+}
+
+server
+{
+  listen 443 ssl;
+  server_name donut.topology.rocks;
+
+  ssl_certificate /etc/letsencrypt/live/donut.topology.rocks/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/donut.topology.rocks/privkey.pem; # managed by Certbot
+
+  location /
+  {
+    include proxy_params;
+    proxy_pass http://unix:/home/bastian/Projects/DONUT/donut.sock;
+  }
+}
+```
+
+The certificate information is of course optional, but it is good
+practice to ensure that `http` requests are always forward to `https`. 
+
 ## Updating the Database
 
 Install a cron job  that runs the following command:

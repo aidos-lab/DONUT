@@ -162,6 +162,21 @@ def get_document(database_dir, identifier):
     return _build_match(document)
 
 
+def get_documents(database_dir):
+    """Return all documents."""
+    db = xapian.Database(database_dir)
+
+    matches = []
+
+    for item in db.postlist(""):
+        identifier = item.docid
+        document = db.get_document(identifier)
+
+        matches.append(_build_match(document))
+
+    return matches
+
+
 def get_random_document(database_dir):
     """Return random document from database."""
     db = xapian.Database(database_dir)

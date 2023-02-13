@@ -9,7 +9,6 @@
   {% endif %}
 
   {% if data is not none %}
-  <ol id="search-results">
     {% if data | length == 0 %}
     <article>
         <h1>No results&hellip;</h1>
@@ -22,6 +21,22 @@
     </article>
     {% endif %}
 
+    {% if suggestion | length != 0 %}
+    <article>
+      {% set link = url_for("index", q=suggestion) %}
+      {% set link = '<a href=' ~ link ~ '>&ldquo;' ~ suggestion ~ '&rdquo;</a>' %}
+      {% if data | length == 0 %}
+        Did you mean {{ link | safe }}?
+      {% else %}
+      Found a potentially related query: {{ link | safe }} (this
+      corrrected query was suggested by the database parser based on
+      term similarity; it does not necessarily imply conceptual
+      similarity)
+      {% endif %}
+    </article>
+    {% endif %}
+
+  <ol id="search-results">
     {% for d in data %}
     <li class="search-result">
       <article>

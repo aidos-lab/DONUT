@@ -23,6 +23,8 @@ def index_documents(data_filename, database_dir):
     db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OPEN)
 
     termgenerator = xapian.TermGenerator()
+    termgenerator.set_database(db)
+    termgenerator.set_flags(termgenerator.FLAG_SPELLING)
     termgenerator.set_stemmer(xapian.Stem("en"))
 
     # TODO: Make this configurable; we could potentially also support
@@ -100,9 +102,10 @@ def search(database_dir, query_str):
 
     Returns
     -------
-    List of dict or None
+    Tuple (list of dict, query string) or None
         Matches corresponding to the query or `None`, if no query string was
-        provided.
+        provided. If matches are returned, the second component of the
+        tuple contains a corrected query string (potentially empty).
     """
     # Being explicit here: whether the string is empty or `None`, we
     # will always return *no* matches.
@@ -112,6 +115,7 @@ def search(database_dir, query_str):
     db = xapian.Database(database_dir)
 
     queryparser = xapian.QueryParser()
+    queryparser.set_database(db)
     queryparser.set_stemmer(xapian.Stem("en"))
     queryparser.set_stemming_strategy(queryparser.STEM_SOME)
 
@@ -124,8 +128,13 @@ def search(database_dir, query_str):
     # Enable wildcard searches for the query as well. That way, folks
     # can improve their queries.
     query = queryparser.parse_query(
-        query_str, queryparser.FLAG_WILDCARD | queryparser.FLAG_DEFAULT
+        query_str,
+        queryparser.FLAG_WILDCARD
+        | queryparser.FLAG_SPELLING_CORRECTION
+        | queryparser.FLAG_DEFAULT,
     )
+
+    corrected_query = queryparser.get_corrected_query_string()
 
     enquire = xapian.Enquire(db)
     enquire.set_query(query)
@@ -142,7 +151,7 @@ def search(database_dir, query_str):
         matches, key=lambda x: x["document"]["year"], reverse=True
     )
 
-    return matches
+    return matches, corrected_query
 
 
 def get_document(database_dir, identifier):

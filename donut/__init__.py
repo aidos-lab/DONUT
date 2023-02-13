@@ -66,8 +66,9 @@ def create(test_config=None):
 
         return render_template(
             "index.html",
-            data=matches,
+            data=matches[0],
             query=query,
+            suggestion=matches[1],
             duration=duration,
         )
 

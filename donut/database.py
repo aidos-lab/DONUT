@@ -151,7 +151,7 @@ def search(database_dir, query_str):
         matches, key=lambda x: x["document"]["year"], reverse=True
     )
 
-    return matches, corrected_query
+    return matches, corrected_query.decode("utf-8")
 
 
 def get_document(database_dir, identifier):

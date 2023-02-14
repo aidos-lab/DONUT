@@ -1,6 +1,7 @@
 """Embed database via UMAP and store it."""
 
 import os
+import sys
 
 import pandas as pd
 
@@ -36,6 +37,7 @@ if __name__ == "__main__":
     X = vectorizer.fit_transform(raw_documents)
     embedder = TSNE(init="random", random_state=42)
     X_emb = embedder.fit_transform(X)
+    X_emb = (X_emb - X_emb.min()) / (X_emb.max() - X_emb.min())
 
     df = pd.DataFrame.from_dict({"x": X_emb[:, 0], "y": X_emb[:, 1]})
 
@@ -46,4 +48,7 @@ if __name__ == "__main__":
     ]
 
     df.set_index("id", inplace=True)
-    print(df.to_csv(sep="\t"))
+
+    # Do not use `print` because it adds a newline to the file, which
+    # may be interpreted incorrectly upon reading.
+    sys.stdout.write(df.to_csv(sep="\t"))

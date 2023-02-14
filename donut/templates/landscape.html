@@ -1,93 +1,102 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+{% set nosearch = True %}
+
+{% extends "base.html" %}
+
+{% block content %}
 
 <script src="https://d3js.org/d3.v6.js"></script>
+
+<article>
+  <h1>The Landscape of DONUT</h1>
+
+  <p>
+    This is an embedding of all articles in DONUT, based on their title
+    and abstract text. This visualisation is a work in progress.
+  </p>
+
+</article>
 
 <div id="landscape"></div>
 
 <script>
 
-// set the dimensions and margins of the graph
-const margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 460 - margin.left - margin.right,
-    height = 450 - margin.top - margin.bottom;
+/*
+  This code has been heavily inspired by the 'scatterplot examples'
+  in the d3 example gallery.
 
-// append the svg object to the body of the page
+  https://d3-graph-gallery.com/graph/scatter_tooltip.html
+*/
+
+const margin = {top: 10, right: 30, bottom: 30, left: 10};
+const width = 800 - margin.left - margin.right;
+const height = 800 - margin.top - margin.bottom;
+
 const svg = d3.select("#landscape")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform",
-          `translate(${margin.left}, ${margin.top})`);
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  //Read the data
   d3.tsv("/static/embedding.tsv").then(function(data) {
 
-  // Add X axis
-  var x = d3.scaleLinear()
-    .domain([-40, 40])
-    .range([ 0, width ]);
-  svg.append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x));
+    var x = d3.scaleLinear()
+      .domain([0, 1])
+      .range([ 0, width ]);
 
-  // Add Y axis
-  var y = d3.scaleLinear()
-    .domain([-40, 40])
-    .range([ height, 0]);
-  svg.append("g")
-    .call(d3.axisLeft(y));
+    var y = d3.scaleLinear()
+      .domain([0, 1])
+      .range([ height, 0]);
 
-  const tooltip = d3.select("#landscape")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "1px")
-    .style("border-radius", "5px")
-    .style("padding", "5px")
-
-  
-  // A function that change this tooltip when the user hover a point.
-  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
-  const mouseover = function(event, d) {
-    tooltip
-      .style("opacity", 1)
-  }
-
-  const mousemove = function(e, d) {
-    tooltip
-      .html(d.title)
-     .style("left", d3.select(this).attr("cx") + "px")     
-      .style("top", d3.select(this).attr("cy") + "px");
-      //.style("left", (d3.mouse(this)[0]+70) + "px")
-      //.style("top", (d3.mouse(this)[1]) + "px")
-  }
-
-  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-  const mouseleave = function(event,d) {
-    tooltip
-      .transition()
-      .duration(500)
+    const tooltip = d3.select("#landscape")
+      .append("div")
       .style("opacity", 0)
-  }
+      .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "1px")
+        .style("border-radius", "5px")
+        .style("padding", "5px");
 
-  // Add dots
-  svg.append('g')
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-      .attr("cx", function (d) { return x(d.x); } )
-      .attr("cy", function (d) { return y(d.y); } )
-      .attr("r", 5)
-      .style("fill", "#69b3a2")
-    .on("mouseover", mouseover )
-    .on("mousemove", mousemove )
-    .on("mouseleave", mouseleave )
+    /* show the tooltip when we hover over it */
+    const mouseover = function(event, d) {
+      tooltip
+        .style("opacity", 1);
+    }
 
-})
+    /* position the tooltip along the cursor */
+    const mousemove = function(e, d) {
+      tooltip
+        .html(d.title)
+        .style("left", (e.x) + "px")
+        .style("top", (e.y) + "px");
+    }
+
+    /* hide the tooltip again */
+    const mouseleave = function(e, d) {
+      tooltip
+        .transition()
+        .duration(250)
+        .style("opacity", 0)
+    }
+
+    /* draw the embedding and set all events */
+    svg.append('g')
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+        .attr("cx", function (d) { return x(d.x); } )
+        .attr("cy", function (d) { return y(d.y); } )
+        .attr("r", 5)
+        .style("fill", "black")
+      .on("mouseover", mouseover )
+      .on("mousemove", mousemove )
+      .on("mouseleave", mouseleave )
+
+  })
 
 </script>
+
+{% endblock %}

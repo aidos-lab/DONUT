@@ -16,6 +16,7 @@ from flask import request
 from flask import send_file
 
 from donut.database import get_document
+from donut.database import get_num_documents
 from donut.database import get_random_document
 from donut.database import get_tags
 from donut.database import search
@@ -46,6 +47,7 @@ def create(test_config=None):
 
     @app.route("/", methods=["GET", "POST"])
     def index():
+        num_documents = get_num_documents(DATABASE_DIR)
         start = datetime.datetime.now()
 
         if request.method == "POST":
@@ -69,6 +71,7 @@ def create(test_config=None):
             data=matches[0] if matches else None,
             query=query,
             suggestion=matches[1] if matches else "",
+            num_documents=num_documents,
             duration=duration,
         )
 

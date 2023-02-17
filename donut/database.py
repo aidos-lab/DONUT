@@ -177,6 +177,14 @@ def get_documents(database_dir):
     return matches
 
 
+def get_num_documents(database_dir):
+    """Return number of documents in database."""
+    db = xapian.Database(database_dir, xapian.DB_OPEN)
+    num_documents = db.get_doccount()
+
+    return num_documents
+
+
 def get_random_document(database_dir):
     """Return random document from database."""
     db = xapian.Database(database_dir)

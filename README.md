@@ -1,7 +1,6 @@
 # DONUT: Database of Original and Non-Theoretical Uses of Topology
 
-[![DOI](https://zenodo.org/badge/537842772.svg)](https://zenodo.org/badge/latestdoi/537842772) ![GitHub](https://img.shields.io/github/license/Pseudomanifold/DONUT) ![GitHub contributors](https://img.shields.io/github/contributors/Pseudomanifold/DONUT)
-
+[![DOI](https://zenodo.org/badge/537842772.svg)](https://zenodo.org/badge/latestdoi/537842772) ![GitHub](https://img.shields.io/github/license/Pseudomanifold/DONUT) ![GitHub contributors](https://img.shields.io/github/contributors/Pseudomanifold/DONUT) ![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/Pseudomanifold/DONUT)
 
 This is the code for [DONUT](https://donut.topology.rocks), a search
 engine for applications of topology. This repository contains the code

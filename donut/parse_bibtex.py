@@ -186,7 +186,10 @@ def get_entries(filename):
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
 
-    entries = [e for e in db.entries if "year" in e or "date" in e]
+    def _get_valid_entries(db):
+        return [e for e in db.entries if "year" in e or "date" in e]
+
+    entries = _get_valid_entries(db)
     entries = [process_entry(e) for e in entries]
 
     # Read file again without any customisations, thus making it
@@ -196,7 +199,7 @@ def get_entries(filename):
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
 
-    raw_entries = [e for e in db.entries if "year" in e or "date" in e]
+    raw_entries = _get_valid_entries(db)
     entries = [dict(e, **{"raw": r}) for e, r in zip(entries, raw_entries)]
 
     return entries

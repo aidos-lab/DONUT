@@ -20,7 +20,7 @@ def index_documents(data_filename, database_dir):
     database_dir : str
         Directory for database
     """
-    db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OPEN)
+    db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OVERWRITE)
 
     termgenerator = xapian.TermGenerator()
     termgenerator.set_database(db)

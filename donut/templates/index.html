@@ -77,6 +77,20 @@
             </li>
           {% endif %}
 
+          {% if document.videos | length %}
+            {% for video in document.videos %}
+              {% set url = video[0] %}
+              {% set title = video[1] %}
+              <li>
+                <a href="{{ url }}">Video
+                  {% if title | length %}
+                    ({{ title }}
+                  {% endif %}
+                </a>
+              </li>
+            {% endfor %}
+          {% endif %}
+
           {% if document.doi | length %}
             <li>
               {% set url = "https://dx.doi.org/" ~ document.doi %}

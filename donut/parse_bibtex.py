@@ -123,6 +123,10 @@ def format_keywords(keywords):
                 "3": "data",
             }
 
+            # TODO: Implement special handling for videos.
+            if category == "V":
+                continue
+
             # Parent--child keyword; split it. We thus make the article
             # searchable using *both* tags. If an article is tagged
             # "images:3d", for example, we want it to appear when you

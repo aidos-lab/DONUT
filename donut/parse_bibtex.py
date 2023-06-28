@@ -96,6 +96,45 @@ def format_authors(authors):
     return output
 
 
+def format_videos(keywords):
+    """Extract optional videos from keywords.
+
+    Returns
+    -------
+    List of tuples
+        List of (title, url) pairs.
+    """
+    videos = []
+    for keyword in keywords.split(","):
+        # We only split at the *first* occurrence of the keyword because
+        # some keywords contain additional hyphens.
+        tokens = keyword.split("-", 1)
+
+        # This skips "bare" keywords; we handle those by assigning the
+        # type of application instead.
+        if len(tokens) == 2:
+            category = tokens[0].strip()
+            keyword = tokens[1].strip()
+
+            if category != "V":
+                continue
+
+            tokens = keyword.split()
+
+            if len(tokens) == 0:
+                continue
+
+            url = tokens[0]
+            title = ""
+
+            if len(tokens) >= 2:
+                title = tokens[1]
+
+            videos.append((url, title))
+
+    return videos
+
+
 def format_keywords(keywords):
     """Format keywords by stripping away leading decimals.
 
@@ -112,7 +151,7 @@ def format_keywords(keywords):
         tokens = keyword.split("-", 1)
 
         # This skips "bare" keywords; we handle those by assigning the
-        # type of applicaion instead.
+        # type of application instead.
         if len(tokens) == 2:
             category = tokens[0].strip()
             keyword = tokens[1].strip()
@@ -123,7 +162,7 @@ def format_keywords(keywords):
                 "3": "data",
             }
 
-            # TODO: Implement special handling for videos.
+            # Videos are handled elsewhere.
             if category == "V":
                 continue
 
@@ -172,6 +211,7 @@ def process_entry(entry):
         "title": format_title(entry),
         "author": format_authors(entry["author"]),
         "keywords": format_keywords(entry.get("keywords", "")),
+        "videos": format_videos(entry.get("keywords", "")),
         "abstract": entry.get("abstract", ""),
         "year": format_year(entry),
         "doi": format_doi(entry.get("doi", "")),

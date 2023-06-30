@@ -44,6 +44,8 @@ def create(test_config=None):
     """Create main application."""
     app = Flask(__name__)
     app.jinja_env.globals.update(get_git_revision=get_git_revision)
+    app.jinja_env.trim_blocks = True
+    app.jinja_env.lstrip_blocks = True
 
     @app.route("/", methods=["GET", "POST"])
     def index():

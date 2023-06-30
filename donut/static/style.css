@@ -181,6 +181,12 @@ span.inline-tag-data
   background: #8da0cb;
 }
 
+.community-resources
+{
+  border:  1px solid #E8E8E8;
+  padding: 0.5em;
+}
+
 .references
 {
   list-style-type: none;

@@ -70,58 +70,83 @@
         </details>
         {% endif %}
 
-        <ul class="references">
-          {% if document.url | length %}
-            <li>
-              <a href="{{ document.url }}">URL</a>
-            </li>
+          {% if (document.code | length) or (document.data | length) or (document.videos | length) %}
+          <div class="community-resources">
+            <h1>Community Resources</h1>
+            <ul>
+              {% for code in document.code %}
+                {% set url = code[0] %}
+                {% set title = code[1] %}
+                  <li>
+                    <a href="{{ url }}">Code
+                      {% if title | length %}
+                        ({{ title }})
+                      {% endif %}
+                    </a>
+                  </li>
+              {% endfor %}
+              {% for code in document.data %}
+                {% set url = data[0] %}
+                {% set title = data[1] %}
+                  <li>
+                    <a href="{{ url }}">Data
+                      {% if title | length %}
+                        ({{ title }})
+                      {% endif %}
+                    </a>
+                  </li>
+              {% endfor %}
+              {% for video in document.videos %}
+                {% set url = video[0] %}
+                {% set title = video[1] %}
+                  <li>
+                    <a href="{{ url }}">Video
+                      {% if title | length %}
+                        ({{ title }})
+                      {% endif %}
+                    </a>
+                  </li>
+              {% endfor %}
+            </ul>
+          </div>
           {% endif %}
 
-          {% if document.videos | length %}
-            {% for video in document.videos %}
-              {% set url = video[0] %}
-              {% set title = video[1] %}
+          <ul class="references">
+            {% if document.url | length %}
               <li>
-                <a href="{{ url }}">Video
-                  {% if title | length %}
-                    ({{ title }})
-                  {% endif %}
-                </a>
+                <a href="{{ document.url }}">URL</a>
               </li>
-            {% endfor %}
-          {% endif %}
-
-          {% if document.doi | length %}
+            {% endif %}
+            {% if document.doi | length %}
+              <li>
+                {% set url = "https://dx.doi.org/" ~ document.doi %}
+                <a href="{{ url }}">DOI</a>
+              </li>
+            {% endif %}
             <li>
-              {% set url = "https://dx.doi.org/" ~ document.doi %}
-              <a href="{{ url }}">DOI</a>
+              {% set url = url_for("export", identifier=id) %}
+              <a href="{{ url }}">Export citation</a>
             </li>
+          </ul>
+
+          {% if document.keywords is defined %}
+          <ul class="tags">
+            {% for keyword in document.keywords %}
+            {% set type = keyword[0] %}
+            {% set keyword = keyword[1] %}
+            <li class="inline-tag">
+              <span class="inline-tag-{{ type}}">
+                {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
+                <a href={{ url}}>{{ keyword }}</a>
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
           {% endif %}
-
-          <li>
-            {% set url = url_for("export", identifier=id) %}
-            <a href="{{ url }}">Export citation</a>
-          </li>
-        </ul>
-
-        {% if document.keywords is defined %}
-        <ul class="tags">
-          {% for keyword in document.keywords %}
-          {% set type = keyword[0] %}
-          {% set keyword = keyword[1] %}
-          <li class="inline-tag">
-            <span class="inline-tag-{{ type}}">
-              {% set url = url_for("index", q='tag:"' ~ keyword ~ '"') %}
-              <a href={{ url}}>{{ keyword }}</a>
-            </span>
-          </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-      </article>
-    </li>
-    {% endfor %}
-  </ol>
+        </article>
+      </li>
+      {% endfor %}
+    </ol>
   {% else %}
   <article>
     <p>
@@ -204,9 +229,6 @@
   key    = {DONUT},
 }</code></pre>
     </p>
-
   </article>
-
   {% endif %}
-
 {% endblock %}

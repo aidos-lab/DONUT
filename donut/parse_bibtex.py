@@ -96,15 +96,30 @@ def format_authors(authors):
     return output
 
 
-def format_videos(keywords):
-    """Extract optional videos from keywords.
+def format_metadata(keywords, identifier):
+    """Extract optional metadata from keywords.
+
+    Metadata are keywords that start with an alphabetic character. This
+    function provides a generic entry point for extracting all types of
+    metadata. The client has to set up the call correctly.
+
+    Parameters
+    ----------
+    keywords : str
+        Keyword string, as formatted by the backend. Keywords are
+        separated by commas.
+
+    identifier : str
+        Indicates the identifier to extract, such as "V" for videos. All
+        other metadata will be ignored.
 
     Returns
     -------
     List of tuples
-        List of (title, url) pairs.
+        List of (url, title) pairs. The title is optional and will be
+        empty if the entry does not define it.
     """
-    videos = []
+    metadata = []
     for keyword in keywords.split(","):
         # We only split at the *first* occurrence of the keyword because
         # some keywords contain additional hyphens.
@@ -116,7 +131,7 @@ def format_videos(keywords):
             category = tokens[0].strip()
             keyword = tokens[1].strip()
 
-            if category != "V":
+            if category != identifier:
                 continue
 
             tokens = keyword.split()
@@ -130,13 +145,16 @@ def format_videos(keywords):
             if len(tokens) >= 2:
                 title = tokens[1]
 
-            videos.append((url, title))
+            metadata.append((url, title))
 
-    return videos
+    return metadata
 
 
 def format_keywords(keywords):
     """Format keywords by stripping away leading decimals.
+
+    A keyword has to start with a number, indicating the category,
+    followed by a string.
 
     Returns
     -------
@@ -162,8 +180,9 @@ def format_keywords(keywords):
                 "3": "data",
             }
 
-            # Videos are handled elsewhere.
-            if category == "V":
+            # If we get an alphabetic character, this is metadata and
+            # needs to be handled elsewhere.
+            if category.isalpha():
                 continue
 
             # Parent--child keyword; split it. We thus make the article
@@ -211,7 +230,9 @@ def process_entry(entry):
         "title": format_title(entry),
         "author": format_authors(entry["author"]),
         "keywords": format_keywords(entry.get("keywords", "")),
-        "videos": format_videos(entry.get("keywords", "")),
+        "code": format_metadata(entry.get("keywords", ""), "C"),
+        "data": format_metadata(entry.get("keywords", ""), "D"),
+        "videos": format_metadata(entry.get("keywords", ""), "V"),
         "abstract": entry.get("abstract", ""),
         "year": format_year(entry),
         "doi": format_doi(entry.get("doi", "")),

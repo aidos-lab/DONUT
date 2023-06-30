@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-
   {% if duration is not none %}
   <div class="query-statistics">
     (found {{ data | length }} matches in {{ duration }}s)
   </div>
   {% endif %}
-
   {% if data is not none %}
     {% if data | length == 0 %}
     <article>
@@ -20,7 +18,6 @@
         </p>
     </article>
     {% endif %}
-
     {% if suggestion | length != 0 %}
     <article>
       {% set link = url_for("index", q=suggestion) %}
@@ -35,40 +32,37 @@
       {% endif %}
     </article>
     {% endif %}
+    <ol id="search-results">
+      {% for d in data %}
+      <li class="search-result">
+        <article>
+          {% set id = d["id"] %}
+          {% set document = d["document"] %}
+          <h1>
+            {{ document.title }}
+            {% if document.year | length %}
+              ({{ document.year }})
+            {% endif %}
+          </h1>
 
-  <ol id="search-results">
-    {% for d in data %}
-    <li class="search-result">
-      <article>
-        {% set id = d["id"] %}
-        {% set document = d["document"] %}
+          {% set authors = [] %}
+          {% for author in document.author %}
+            {% set url = url_for("index", q='author:"' ~ author ~ '"') %}
+            {% set url = '<a href=' ~ url ~ '>' ~ author ~ '</a>' %}
+            {% set z = authors.append(url) %}
+          {% endfor %}
 
-        <h1>
-          {{ document.title }}
-          {% if document.year | length %}
-            ({{ document.year }})
+          <address>
+            {{ authors | join(', ') | safe }}
+          </address>
+
+          {% if document.abstract | length %}
+          <details>
+            <summary>Abstract</summary>
+
+            {{ document.abstract }}
+          </details>
           {% endif %}
-        </h1>
-
-        {% set authors = [] %}
-
-        {% for author in document.author %}
-          {% set url = url_for("index", q='author:"' ~ author ~ '"') %}
-          {% set url = '<a href=' ~ url ~ '>' ~ author ~ '</a>' %}
-          {% set z = authors.append(url) %}
-        {% endfor %}
-
-        <address>
-          {{ authors | join(', ') | safe }}
-        </address>
-
-        {% if document.abstract | length %}
-        <details>
-          <summary>Abstract</summary>
-
-          {{ document.abstract }}
-        </details>
-        {% endif %}
 
           {% if (document.code | length) or (document.data | length) or (document.videos | length) %}
           <div class="community-resources">

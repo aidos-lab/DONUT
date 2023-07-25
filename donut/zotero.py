@@ -26,7 +26,7 @@ if __name__ == "__main__":
     assert DATABASE_DIR is not None
 
     zot = zotero.Zotero(2425412, "group", API_KEY)
-    zot.add_parameters(format="bibtex")
+    zot.add_parameters(format="biblatex")
 
     # This returns a database compatible with `bibtexparser`. We store
     # it in a new file on purpose in order to employ our parser rather

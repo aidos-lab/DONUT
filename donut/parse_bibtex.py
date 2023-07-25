@@ -249,7 +249,11 @@ def process_entry(entry):
 
 def get_entries(filename):
     """Get entries from file."""
-    parser = BibTexParser(common_strings=True, customization=customisations)
+    parser = BibTexParser(
+        common_strings=True,
+        customization=customisations,
+        ignore_nonstandard_types=False,
+    )
 
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)
@@ -262,7 +266,7 @@ def get_entries(filename):
 
     # Read file again without any customisations, thus making it
     # possible for us to include the "raw" entry.
-    parser = BibTexParser(common_strings=True)
+    parser = BibTexParser(common_strings=True, ignore_nonstandard_types=False)
 
     with open(filename) as f:
         db = bibtexparser.load(f, parser=parser)

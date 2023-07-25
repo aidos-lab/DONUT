@@ -72,7 +72,10 @@ def format_year(entry):
         return entry.get("year")
 
     date = dateutil.parser.parse(entry.get("date", ""))
-    return date.year()
+
+    # Note that we actually want to return a string here since no fields
+    # are encoded in other data types.
+    return str(date.year)
 
 
 def format_authors(authors):

@@ -84,6 +84,33 @@ def create(test_config=None):
 
         matches = get_documents(DATABASE_DIR)
 
+        matches = [
+            m
+            for m in matches
+            if m["document"]["raw"]["ENTRYTYPE"] != "software"
+        ]
+
+        duration = datetime.datetime.now() - start
+        duration = duration.total_seconds()
+
+        return render_template(
+            "index.html",
+            data=matches,
+            duration=duration,
+        )
+
+    @app.route("/software")
+    def software():
+        start = datetime.datetime.now()
+
+        matches = get_documents(DATABASE_DIR)
+
+        matches = [
+            m
+            for m in matches
+            if m["document"]["raw"]["ENTRYTYPE"] == "software"
+        ]
+
         duration = datetime.datetime.now() - start
         duration = duration.total_seconds()
 

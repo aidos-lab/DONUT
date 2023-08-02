@@ -29,7 +29,7 @@ from xapian import QueryParserError
 # Make sure that we have access to the database directory and other
 # information that we require.
 load_dotenv()
-DATABASE_DIR = os.getenv("DATABASE_DIR")
+DATABASE_DIR = os.getenv("DATABASE_DIR", "data")
 
 
 def get_git_revision():

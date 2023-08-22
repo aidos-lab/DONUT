@@ -1,7 +1,6 @@
 """Parse BibTeX file into records."""
 
 import bibtexparser
-import warnings
 
 import dateutil.parser
 
@@ -23,14 +22,6 @@ def customisations(record):
     record = convert_to_unicode(record)
     record = author(record)
     return record
-
-
-def initialise(name, pad=""):
-    """Return initial of author name."""
-    if name:
-        return pad + name[0] + "."
-    else:
-        return ""
 
 
 def fix_raw_latex(field):
@@ -89,10 +80,7 @@ def format_authors(authors):
         name_parts = " ".join(name_parts)
 
         name = HumanName(name_parts)
-
-        name_parts = (
-            name.first + initialise(name.middle, " ") + " " + name.last
-        )
+        name_parts = name.first + " " + name.middle + " " + name.last
 
         output.append(name_parts)
 

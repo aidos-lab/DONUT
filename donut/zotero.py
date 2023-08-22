@@ -20,7 +20,7 @@ load_dotenv()
 
 if __name__ == "__main__":
     API_KEY = os.getenv("ZOTERO_API_KEY")
-    DATABASE_DIR = os.getenv("DATABASE_DIR")
+    DATABASE_DIR = os.getenv("DATABASE_DIR", "data")
 
     assert API_KEY is not None
     assert DATABASE_DIR is not None

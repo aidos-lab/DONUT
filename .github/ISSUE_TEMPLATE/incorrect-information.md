@@ -1,7 +1,7 @@
 ---
 name: Incorrect Information
 about: Provide details of incorrect information on DONUT.
-title: "[INCORRECT INFORMATION]"
+title: ''
 labels: incorrect information
 assignees: ''
 

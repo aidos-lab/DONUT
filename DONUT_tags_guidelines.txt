@@ -5,18 +5,18 @@ There are three categories:
 2 - Mathematical tool(s) used
 3 - Input type(s)
 
-Each paper must have at least one tag for each category. The tags should be in lower-case letter unless they are acronyms. 
-Each paper should be tagged as precisely as possible with the consideration that too unique tags are not necessarily useful. 
-Therefore the precision needs to be calibrate with the grouping of very similar tags. 
-They should be arranged hierarchically, using colon separation between the levels, from the most general to the most specific (as a rule of thumbs, three levels should be used). 
+Each paper must have at least one tag for each category. The tags should be in lower-case letters unless they are acronyms.
+Each paper should be tagged as precisely as possible with the consideration that unique tags are not necessarily useful.
+Therefore the precision needs to be calibrated with the grouping of very similar tags.
+They should be arranged hierarchically, using colon separation between the levels, from the most general to the most specific (as a rule of thumb, three levels should be used).
 To write a tag in Zotero, use the format "# - tag".
-For example, if the input type is a CAT scan, two tags for the input type(s) can be 
+For example, if the input type is a CAT scan, two tags for the input type(s) can be
 3 - image:2d image:CAT scan
 3 - image:grayscale image:CAT scan
 
 Tags #2 do not restrict to TDA methods, but encompass any mathematical tools used.
 
-Two additional flavour can added: "innovate" and "confirm", written as this, without number of hyphen.
-It is not required that each paper has a flavour. 
-"innovate" means that TDA is bringing something new to the specific domain, for example more information, or same information from smaller/easier to obtain inputs.
+Two additional flavors can added: "innovate" and "confirm", written as this, without a number or hyphens.
+It is not required that each paper has a flavor.
+"innovate" means that TDA is bringing something new to the specific domain, for example, more information, or the same information from smaller/easier-to-obtain inputs.
 "confirm" means that TDA is provably an alternative method to obtain information that previous techniques were also able to obtain.

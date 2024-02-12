@@ -196,8 +196,11 @@ def format_keywords(keywords):
         elif len(tokens) == 1:
             flavour = tokens[0].strip()
 
-            # Don't add empty tags.
-            if flavour:
+            # Not every "bare" flavour should be shown.
+            valid_flavours = ["confirm", "innovate"]
+
+            # Don't add empty tags or invalid flavours.
+            if flavour and flavour.lower() in valid_flavours:
                 formatted_keywords.append(("flavour", flavour))
 
     # The `set` ensures that we only add keywords at most once even if

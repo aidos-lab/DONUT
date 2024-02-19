@@ -149,11 +149,11 @@ def format_keywords(keywords):
 
     Returns
     -------
-    List of tuples
-        List of (category, keyword) pairs, with categories being spelled
+    Set of tuples
+        Set of (category, keyword) pairs, with categories being spelled
         out according to the labelling scheme.
     """
-    formatted_keywords = []
+    formatted_keywords = set()
     for keyword in keywords.split(","):
         # We only split at the *first* occurrence of the keyword because
         # some keywords contain additional hyphens.
@@ -181,14 +181,21 @@ def format_keywords(keywords):
             # "images:3d", for example, we want it to appear when you
             # search for "images" and when you search for "images:3d".
             if ":" in keyword:
-                parents = keyword.split(":")[:-1]
+                parts = keyword.split(":")
 
-                # Add only the parent keyword; the full keyword will be
-                # added afterwards anyway.
-                for parent in parents:
-                    formatted_keywords.append((category_map[category], parent))
+                # Add subcategory for *nested* categories, including
+                # those that have more than one parent. For example,
+                # this splits "foo:bar:baz" into "foo:bar" and "foo"
+                # respectively.
+                for index in range(len(parts) - 1):
+                    subcategory = ":".join(parts[: -(index + 1)])
+                    formatted_keywords.add(
+                        (category_map[category], subcategory)
+                    )
 
-            formatted_keywords.append((category_map[category], keyword))
+            # Add the original keyword again, i.e. "foo:bar:baz" without
+            # additional formatting. This ensures an intact hierarchy.
+            formatted_keywords.add((category_map[category], keyword))
 
         # Bare keyword, which indicates the "flavour" of a method, i.e.
         # whether the method contributes something new or confirms some
@@ -201,7 +208,7 @@ def format_keywords(keywords):
 
             # Don't add empty tags or invalid flavours.
             if flavour and flavour.lower() in valid_flavours:
-                formatted_keywords.append(("flavour", flavour))
+                formatted_keywords.add(("flavour", flavour))
 
     # The `set` ensures that we only add keywords at most once even if
     # they occur multiple times (this can happen in case hierarchical

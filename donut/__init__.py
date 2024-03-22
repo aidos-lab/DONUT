@@ -145,10 +145,6 @@ def create(test_config=None):
         tags = flat_tags_to_hierarchy(tags)
         return render_template("tags.html", tags=tags)
 
-    @app.route("/landscape")
-    def landscape():
-        return render_template("landscape.html")
-
     @app.route("/export/<int:identifier>")
     def export(identifier):
         document = get_document(DATABASE_DIR, identifier)

@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# update_database: Queries new files from Zotero, checks them into
+# `git`, and re-indexes the database.
+
+set -e
+
+python -m donut.zotero_to_bib
+
+# Get project root directory to simplify the subsequent path operations.
+GIT_DIR=$(dirname "`git rev-parse --git-dir`")
+
+# Make sure that this directory actually exists before continuing. Else,
+# our flags will bail us out early.
+[ -d "$GIT_DIR" ] && echo "Found project directory"
+
+git add $GIT_DIR/data/*.bib
+git commit -m "Updated database"
+
+git pull
+git push
+
+python -m donut.reindex

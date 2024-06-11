@@ -15,7 +15,7 @@ load_dotenv()
 
 
 if __name__ == "__main__":
-    DATABASE_DIR = os.getenv("DATABASE_DIR", "data")
+    DATABASE_DIR = os.getenv("DATABASE_DIR", "database")
     assert DATABASE_DIR is not None
 
     index_documents("/tmp/tda.bib", DATABASE_DIR)

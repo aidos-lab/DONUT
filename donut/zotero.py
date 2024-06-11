@@ -20,7 +20,7 @@ load_dotenv()
 
 if __name__ == "__main__":
     API_KEY = os.getenv("ZOTERO_API_KEY")
-    DATABASE_DIR = os.getenv("DATABASE_DIR", "data")
+    DATABASE_DIR = os.getenv("DATABASE_DIR", "database")
 
     assert API_KEY is not None
     assert DATABASE_DIR is not None
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     database = zot.everything(zot.items())
 
     with tempfile.TemporaryDirectory() as tmp:
-        path = os.path.join(tmp, "tda.bib")
+        path = os.path.join("/tmp", "tda.bib")
 
         with open(path, "w") as f:
             bibtexparser.dump(database, f)

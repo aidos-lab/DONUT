@@ -10,7 +10,7 @@ from donut.database import get_tags
 from nltk.metrics.distance import jaro_winkler_similarity
 
 load_dotenv()
-DATABASE_DIR = os.getenv("DATABASE_DIR", "data")
+DATABASE_DIR = os.getenv("DATABASE_DIR", "database")
 
 
 if __name__ == "__main__":

@@ -12,6 +12,10 @@ from donut.parse_bibtex import get_entries
 def index_documents(data_filename, database_dir):
     """Index documents from data file.
 
+    This function will index documents from a database of BibTeX
+    entries. Duplicate entries will be detected based on the key
+    of the entry. Thus, this function is idempotent.
+
     Parameters
     ----------
     data_filename : str
@@ -20,7 +24,7 @@ def index_documents(data_filename, database_dir):
     database_dir : str
         Directory for database
     """
-    db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OVERWRITE)
+    db = xapian.WritableDatabase(database_dir, xapian.DB_CREATE_OR_OPEN)
 
     termgenerator = xapian.TermGenerator()
     termgenerator.set_database(db)
@@ -79,6 +83,8 @@ def index_documents(data_filename, database_dir):
         id_term = "Q" + identifier
         doc.add_boolean_term(id_term)
         db.replace_document(id_term, doc)
+
+    db.close()
 
 
 def _build_match(document):

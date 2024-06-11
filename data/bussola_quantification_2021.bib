@@ -1,0 +1,20 @@
+@article{bussola_quantification_2021,
+ abstract = {We introduce here a novel machine learning ({ML}) framework to address the issue of the quantitative assessment of the immune content in neuroblastoma ({NB}) specimens. First, the {EUNet}, a U-Net with an {EfficientNet} encoder, is trained to detect lymphocytes on tissue digital slides stained with the {CD}3 T-cell marker. The training set consists of 3782 images extracted from an original collection of 54 whole slide images ({WSIs}), manually annotated for a total of 73,751 lymphocytes. Resampling strategies, data augmentation, and transfer learning approaches are adopted to warrant reproducibility and to reduce the risk of overfitting and selection bias. Topological data analysis ({TDA}) is then used to define activation maps from different layers of the neural network at different stages of the training process, described by persistence diagrams ({PD}) and Betti curves. {TDA} is further integrated with the uniform manifold approximation and projection ({UMAP}) dimensionality reduction and the hierarchical density-based spatial clustering of applications with noise ({HDBSCAN}) algorithm for clustering, by the deep features, the relevant subgroups and structures, across different levels of the neural network. Finally, the recent {TwoNN} approach is leveraged to study the variation of the intrinsic dimensionality of the U-Net model. As the main task, the proposed pipeline is employed to evaluate the density of lymphocytes over the whole tissue area of the {WSIs}. The model achieves good results with mean absolute error 3.1 on test set, showing significant agreement between densities estimated by our {EUNet} model and by trained pathologists, thus indicating the potentialities of a promising new strategy in the quantification of the immune content in {NB} specimens. Moreover, the {UMAP} algorithm unveiled interesting patterns compatible with pathological characteristics, also highlighting novel insights into the dynamics of the intrinsic dataset dimensionality at different stages of the training process. All the experiments were run on the Microsoft Azure cloud platform.},
+ author = {Bussola, Nicole and Papa, Bruno and Melaiu, Ombretta and Castellano, Aurora and Fruci, Doriana and Jurman, Giuseppe},
+ date = {2021-01},
+ doi = {10.3390/ijms22168804},
+ issn = {1422-0067},
+ journaltitle = {International Journal of Molecular Sciences},
+ keywords = {1 - Digital pathology, 1 - Medicine, 1 - Neuroblastoma, 1 - Oncology, 2 - Betti curves, 2 - {HDBSCAN}, 2 - Machine learning, 2 - Mapper, 2 - Persistence diagrams, 2 - Persistent homology, 3 - 2D images},
+ langid = {english},
+ note = {Number: 16
+Publisher: Multidisciplinary Digital Publishing Institute},
+ number = {16},
+ pages = {8804},
+ rights = {http://creativecommons.org/licenses/by/3.0/},
+ shorttitle = {Quantification of the Immune Content in Neuroblastoma},
+ title = {Quantification of the Immune Content in Neuroblastoma: Deep Learning and Topological Data Analysis in Digital Pathology},
+ url = {https://www.mdpi.com/1422-0067/22/16/8804},
+ urldate = {2022-12-06},
+ volume = {22}
+}

@@ -4,4 +4,6 @@
 .python-version
 
 data/
+database/
+
 __pycache__/

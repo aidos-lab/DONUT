@@ -5,7 +5,7 @@
 
 set -e
 
-python -m donut.zotero_to_bib
+.venv/bin/python -m donut.zotero_to_bib
 
 # Get project root directory to simplify the subsequent path operations.
 GIT_DIR=$(dirname "`git rev-parse --git-dir`")

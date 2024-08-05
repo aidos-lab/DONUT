@@ -20,4 +20,4 @@ git commit -m "Updated database"
 git pull
 git push
 
-python -m donut.reindex
+.venv/bin/python -m donut.reindex

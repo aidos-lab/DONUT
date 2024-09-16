@@ -153,10 +153,6 @@ def search(database_dir, query_str):
     for match in enquire.get_mset(0, n_documents):
         matches.append(_build_match(match.document))
 
-    matches = sorted(
-        matches, key=lambda x: x["document"]["year"], reverse=True
-    )
-
     return matches, corrected_query.decode("utf-8")
 
 

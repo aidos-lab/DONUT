@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% set nosearch = true %}
+
+{% block content %}
+<article>
+  <h1>Timeline</h1>
+  <p>Papers by year, colored by primary application domain.</p>
+
+  <canvas id="timeline-chart" width="600" height="300"></canvas>
+
+  {% for year, papers in by_year.items() %}
+  <section>
+    <h2>{{ year }} ({{ papers | length }} papers)</h2>
+    <ul class="timeline-entries">
+      {% for paper in papers %}
+      <li>
+        <span class="timeline-tag">{{ paper.tag }}</span>
+        {{ paper.title }}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+</article>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+  var byYear = {{ by_year | tojson }};
+  var years = Object.keys(byYear).sort();
+
+  var tagSet = new Set();
+  years.forEach(function(y) {
+    byYear[y].forEach(function(p) { tagSet.add(p.tag); });
+  });
+  var tags = Array.from(tagSet).sort();
+
+  var colors = [
+    '#66c2a5', '#fc8d62', '#8da0cb', '#e78ac3', '#a6d854',
+    '#ffd92f', '#e5c494', '#b3b3b3', '#1f78b4', '#33a02c',
+    '#fb9a99', '#e31a1c', '#ff7f00', '#cab2d6', '#6a3d9a'
+  ];
+
+  var datasets = tags.map(function(tag, i) {
+    return {
+      label: tag,
+      data: years.map(function(y) {
+        return byYear[y].filter(function(p) {
+          return p.tag === tag;
+        }).length;
+      }),
+      backgroundColor: colors[i % colors.length]
+    };
+  });
+
+  new Chart(document.getElementById('timeline-chart'), {
+    type: 'bar',
+    data: { labels: years, datasets: datasets },
+    options: {
+      responsive: true,
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, beginAtZero: true }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: { boxWidth: 12, font: { size: 10 } }
+        }
+      }
+    }
+  });
+})();
+</script>
+{% endblock %}

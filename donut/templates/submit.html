@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% set nosearch = true %}
+
+{% block content %}
+<article>
+  <h1>Submit a Paper or Software</h1>
+  <p>
+    Use this form to suggest a paper or software tool for inclusion in
+    DONUT. All submissions are reviewed by a maintainer before being
+    added to the database.
+  </p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="submit-success">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if errors | length > 0 %}
+  <div class="error">
+    <ul>
+      {% for error in errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <form method="POST" class="submit-form">
+    <fieldset>
+      <legend>Basic Information</legend>
+
+      <label for="title">Title *</label>
+      <input type="text" id="title" name="title" required
+             value="{{ form.title | default('') }}">
+
+      <label for="authors">Authors (comma-separated) *</label>
+      <input type="text" id="authors" name="authors" required
+             placeholder="Alice Smith, Bob Jones"
+             value="{{ form.authors | default('') }}">
+
+      <label for="year">Year *</label>
+      <input type="number" id="year" name="year" required
+             min="1900" max="2100"
+             value="{{ form.year | default('') }}">
+
+      <label for="doi">DOI</label>
+      <input type="text" id="doi" name="doi"
+             placeholder="10.1234/example"
+             value="{{ form.doi | default('') }}">
+
+      <label for="url">URL</label>
+      <input type="url" id="url" name="url"
+             placeholder="https://..."
+             value="{{ form.url | default('') }}">
+
+      <label for="abstract">Abstract</label>
+      <textarea id="abstract" name="abstract" rows="5"
+        >{{ form.abstract | default('') }}</textarea>
+
+      <label>Entry type *</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="entry_type" value="article"
+                 {{ 'checked' if form.entry_type | default('article') == 'article' }}>
+          Paper
+        </label>
+        <label>
+          <input type="radio" name="entry_type" value="software"
+                 {{ 'checked' if form.entry_type | default('') == 'software' }}>
+          Software
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tags</legend>
+      <p class="field-help">
+        Select existing tags or type new ones below. Each paper should
+        have at least one tag in each category.
+      </p>
+
+      <label>Application Tags</label>
+      <div class="tag-picker" data-name="tags_applications">
+        <input type="text" class="tag-picker-filter" placeholder="Filter application tags..." autocomplete="off">
+        <div class="tag-picker-options">
+          {% for tag in tags.get("applications", []) %}
+          <label class="tag-pill tag-pill-applications">
+            <input type="checkbox" name="tags_applications" value="{{ tag }}"
+              {{ 'checked' if tag in form.get('tags_applications', []) }}>
+            {{ tag }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <label>Tool Tags</label>
+      <div class="tag-picker" data-name="tags_tools">
+        <input type="text" class="tag-picker-filter" placeholder="Filter tool tags..." autocomplete="off">
+        <div class="tag-picker-options">
+          {% for tag in tags.get("tools", []) %}
+          <label class="tag-pill tag-pill-tools">
+            <input type="checkbox" name="tags_tools" value="{{ tag }}"
+              {{ 'checked' if tag in form.get('tags_tools', []) }}>
+            {{ tag }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <label>Data Tags</label>
+      <div class="tag-picker" data-name="tags_data">
+        <input type="text" class="tag-picker-filter" placeholder="Filter data tags..." autocomplete="off">
+        <div class="tag-picker-options">
+          {% for tag in tags.get("data", []) %}
+          <label class="tag-pill tag-pill-data">
+            <input type="checkbox" name="tags_data" value="{{ tag }}"
+              {{ 'checked' if tag in form.get('tags_data', []) }}>
+            {{ tag }}
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <label for="new_tags">New tags (if not listed above)</label>
+      <textarea id="new_tags" name="new_tags" rows="2"
+                placeholder="One tag per line, e.g.: 1 - robotics:swarm"
+        >{{ form.new_tags | default('') }}</textarea>
+
+      <label>Flavour</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="flavour" value=""
+                 {{ 'checked' if form.flavour | default('') == '' }}>
+          Neither
+        </label>
+        <label>
+          <input type="radio" name="flavour" value="innovate"
+                 {{ 'checked' if form.flavour | default('') == 'innovate' }}>
+          Innovate
+        </label>
+        <label>
+          <input type="radio" name="flavour" value="confirm"
+                 {{ 'checked' if form.flavour | default('') == 'confirm' }}>
+          Confirm
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Community Resources (optional)</legend>
+
+      <label for="code_url">Code URL</label>
+      <input type="url" id="code_url" name="code_url"
+             placeholder="https://github.com/..."
+             value="{{ form.code_url | default('') }}">
+
+      <label for="data_url">Data URL</label>
+      <input type="url" id="data_url" name="data_url"
+             placeholder="https://..."
+             value="{{ form.data_url | default('') }}">
+
+      <label for="video_url">Video URL</label>
+      <input type="url" id="video_url" name="video_url"
+             placeholder="https://youtube.com/..."
+             value="{{ form.video_url | default('') }}">
+    </fieldset>
+
+    <button type="submit" class="submit-button">Submit for Review</button>
+  </form>
+</article>
+{% endblock %}

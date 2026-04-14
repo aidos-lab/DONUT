@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% set nosearch = true %}
+
+{% block content %}
+<article>
+  <h1>Database Statistics</h1>
+
+  <div class="stats-summary">
+    <p>
+      <strong>{{ stats.total_papers }}</strong> papers and
+      <strong>{{ stats.total_software }}</strong> software entries indexed.
+    </p>
+  </div>
+
+  <section>
+    <h1>Papers by Year</h1>
+    <canvas id="years-chart" width="600" height="300"></canvas>
+    <noscript>
+      <ul>
+        {% for year, count in stats.years.items() %}
+          <li>{{ year }}: {{ count }}</li>
+        {% endfor %}
+      </ul>
+    </noscript>
+  </section>
+
+  <section>
+    <h1>Top 20 Tags</h1>
+    <canvas id="tags-chart" width="600" height="400"></canvas>
+    <noscript>
+      <ol>
+        {% for tag, count in stats.top_tags %}
+          <li>
+            {% set url = url_for("index", q='tag:"' ~ tag ~ '"') %}
+            <a href="{{ url }}">{{ tag }}</a> ({{ count }})
+          </li>
+        {% endfor %}
+      </ol>
+    </noscript>
+  </section>
+
+  <section>
+    <h1>Top 20 Authors</h1>
+    <table>
+      <thead>
+        <tr><th>Author</th><th>Papers</th></tr>
+      </thead>
+      <tbody>
+        {% for author, count in stats.top_authors %}
+        <tr>
+          <td>
+            {% set url = url_for("index", q='author:"' ~ author ~ '"') %}
+            <a href="{{ url }}">{{ author }}</a>
+          </td>
+          <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</article>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+  var yearsData = {{ stats.years | tojson }};
+  var yearsLabels = Object.keys(yearsData);
+  var yearsValues = Object.values(yearsData);
+
+  new Chart(document.getElementById('years-chart'), {
+    type: 'bar',
+    data: {
+      labels: yearsLabels,
+      datasets: [{
+        label: 'Papers',
+        data: yearsValues,
+        backgroundColor: '#66c2a5'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+    }
+  });
+
+  var tagsData = {{ stats.top_tags | tojson }};
+  var tagsLabels = tagsData.map(function(t) { return t[0]; });
+  var tagsValues = tagsData.map(function(t) { return t[1]; });
+
+  new Chart(document.getElementById('tags-chart'), {
+    type: 'bar',
+    data: {
+      labels: tagsLabels,
+      datasets: [{
+        label: 'Papers',
+        data: tagsValues,
+        backgroundColor: '#fc8d62'
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+</script>
+{% endblock %}

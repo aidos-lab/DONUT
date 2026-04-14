@@ -1,0 +1,60 @@
+{% if facets is defined and facets is not none %}
+<details class="facets">
+  <summary>Refine results</summary>
+
+  {% for category in ["applications", "tools", "data"] %}
+    {% if category in facets.tags %}
+    {% set all_tags = facets.tags[category].most_common() %}
+    <div class="facet-group" {% if all_tags | length > 10 %}data-filterable{% endif %}>
+      <h2>{{ category | title }}</h2>
+      <ul class="facet-short">
+        {% for tag, count in all_tags[:10] %}
+        <li>
+          <a href="?q={{ query | default('') }} AND tag:&quot;{{ tag }}&quot;">
+            {{ tag }} ({{ count }})
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if all_tags | length > 10 %}
+      <div class="facet-filter-wrap" style="display:none;">
+        <input type="text" class="facet-filter" placeholder="Filter {{ category }}..." autocomplete="off">
+      </div>
+      <ul class="facet-full" style="display:none;">
+        {% for tag, count in all_tags %}
+        <li>
+          <a href="?q={{ query | default('') }} AND tag:&quot;{{ tag }}&quot;">
+            {{ tag }} ({{ count }})
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="#" class="facet-show-all">Show all &#x25B8;</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="facet-group">
+    <h2>Year</h2>
+    <ul>
+      {% for year, count in facets.years | dictsort(reverse=true) %}
+      <li>
+        <a href="?q={{ query | default('') }} AND year:{{ year }}">
+          {{ year }} ({{ count }})
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="facet-group">
+    <h2>Type</h2>
+    <ul>
+      {% for type, count in facets.types.items() %}
+      <li>{{ type }} ({{ count }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+</details>
+{% endif %}

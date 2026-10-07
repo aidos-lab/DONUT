@@ -1,6 +1,7 @@
 *~
 *.swp
 
+.env
 .python-version
 
 database/
